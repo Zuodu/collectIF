@@ -11,6 +11,10 @@ import dao.DemandeDAO;
 import dao.EvenementDAO;
 import dao.JpaUtil;
 import dao.LieuDAO;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.ListIterator;
 import metier.modele.Activite;
 import metier.modele.Adherent;
 import metier.modele.Demande;
@@ -39,7 +43,7 @@ public class ServiceMetier {
         pause(5);
     }
         
-    public static void creerAdherent(Adherent a) throws Exception
+    public void creerAdherent(Adherent a) throws Exception
     /*
             Vérifie l'existence d'un Adhérent donné par formulaire d'inscritption 
             dans la BD et le créé s'il n'y est pas.
@@ -52,7 +56,7 @@ public class ServiceMetier {
         log("Success in creating new "+a.toString());
     }
     
-    public static void creerActivite(Activite a) throws Exception 
+    public void creerActivite(Activite a) throws Exception 
     {
         ActiviteDAO actDAO = new ActiviteDAO();
         JpaUtil.ouvrirTransaction();
@@ -61,7 +65,7 @@ public class ServiceMetier {
         log("Success in creating new "+a.toString());
     }
     
-    public static void creerLieu(Lieu a) throws Exception 
+    public void creerLieu(Lieu a) throws Exception 
     {
         LieuDAO lDAO = new LieuDAO();
         JpaUtil.ouvrirTransaction();
@@ -70,7 +74,7 @@ public class ServiceMetier {
         log("Success in creating new "+a.toString());
     }
     
-    public static void creerDemande(Demande d) throws Exception 
+    public void creerDemande(Demande d) throws Exception 
     {
         DemandeDAO demDAO = new DemandeDAO();
         JpaUtil.ouvrirTransaction();
@@ -79,7 +83,7 @@ public class ServiceMetier {
         log("Success in creating new "+d.toString());
     }
     
-    public static void creerEvenement(Evenement e) throws Exception 
+    public void creerEvenement(Evenement e) throws Exception 
     {
         EvenementDAO evDAO = new EvenementDAO();
         JpaUtil.ouvrirTransaction();
@@ -88,21 +92,51 @@ public class ServiceMetier {
         log("Success in creating new "+e.toString());
     }
     
-    public static Adherent connexion(String mail) throws Exception
+    public Adherent connexion(String mail) throws Exception
     /*
             Trouve/Vérifie l'existence du mail dans la BD
             */
     {
+        AdherentDAO adhDAO = new AdherentDAO();
+        JpaUtil.ouvrirTransaction();
+        Adherent utilisateur = adhDAO.findByMail(mail);
+        JpaUtil.validerTransaction();
         
+        return utilisateur;
     }
     
-    public static int disconnection(String mail) throws Exception
+    public List<Demande> afficherDemandeUtilisateur() throws Exception
     /*
-            Trouve/Vérifie l'existence du mail dans la BD et change le statut de
-            l'utilisateur 
+            Trouve/Vérifie l'existence du mail dans la BD
             */
     {
+        List<Demande> listeDemande = new ArrayList<Demande>();
+        DemandeDAO demDAO = new DemandeDAO();
+        JpaUtil.ouvrirTransaction();
+        listeDemande = demDAO.findAll();
+        JpaUtil.validerTransaction();
         
+        return listeDemande;
+    }
+    
+    public List<Demande> afficherDemandeEnCours(Date present) throws Exception
+    /*
+            Trouve/Vérifie l'existence du mail dans la BD
+            */
+    {
+        List<Demande> listeDemande = new ArrayList<Demande>();
+        DemandeDAO demDAO = new DemandeDAO();
+        JpaUtil.ouvrirTransaction();
+        listeDemande = demDAO.findAll();
+        JpaUtil.validerTransaction();
+        
+        ListIterator<Demande> demandeIterator = listeDemande.listIterator();
+        while(demandeIterator.hasNext()) {
+            Demande demande = demandeIterator.next();
+            if(present.after(demande.getDate()))
+            demandeIterator.remove();
+        }
+        return listeDemande;
     }
     
 }
