@@ -47,7 +47,7 @@ public class AdherentDAO {
         EntityManager em = JpaUtil.obtenirEntityManager();
         Adherent adherent = null;
         try {
-            Query q = em.createQuery("SELECT a FROM Adherent a");
+            Query q = em.createQuery("SELECT a FROM Adherent a WHERE mail = " + mail);
             adherent = (Adherent) q.getSingleResult();
         }
         catch(Exception e) {

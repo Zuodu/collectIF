@@ -5,6 +5,8 @@
     <class>metier.modele.Adherent</class>
     <class>metier.modele.Activite</class>
     <class>metier.modele.Lieu</class>
+    <class>metier.modele.Demande</class>
+    <class>metier.modele.EvenementPayant</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:1527/BD CollectIF"/>
       <property name="javax.persistence.jdbc.password" value="admin01"/>

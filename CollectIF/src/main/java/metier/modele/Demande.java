@@ -6,16 +6,19 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Temporal;
 import util.Periode;
 
 @Entity
 public class Demande implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
     private String mailUtilisateur;
     private String nomUtilisateur;
     private Activite activite;
     private Periode periode;
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Date date;
 
     protected Demande() {

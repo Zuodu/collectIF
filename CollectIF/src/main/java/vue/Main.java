@@ -9,12 +9,14 @@ import dao.ActiviteDAO;
 import dao.AdherentDAO;
 import dao.JpaUtil;
 import dao.LieuDAO;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
+import java.util.Date;
+import java.util.ListIterator;
 import metier.modele.Activite;
 import metier.modele.Adherent;
+import metier.modele.Demande;
 import metier.modele.Lieu;
+import metier.service.ServiceMetier;
+import static util.Periode.Matin;
 
 /**
  *
@@ -25,6 +27,38 @@ public class Main {
         JpaUtil.init();
         JpaUtil.creerEntityManager();
         
+        ServiceMetier service = new ServiceMetier();
+        
+        Date date1 = new Date(98, 11, 23);
+        ActiviteDAO tarotDAO = new ActiviteDAO();
+        Demande d1 = new Demande("asing8183@free.fr", "SING", tarotDAO.findById(14), Matin, date1);
+        service.creerDemande(d1);
+        
+        Date date2 = new Date(312, 02, 14);
+        ActiviteDAO volleyDAO = new ActiviteDAO();
+        Demande d2 = new Demande("asing8183@free.fr", "SING", volleyDAO.findById(15), Matin, date2);
+        service.creerDemande(d2);
+        
+        Date date3 = new Date(412, 05, 17);
+        ActiviteDAO tennisDAO = new ActiviteDAO();
+        Demande d3 = new Demande("romain.mie@free.fr", "MIE", tennisDAO.findById(17), Matin, date3);
+        service.creerDemande(d3);
+        
+        ListIterator<Demande> it1 = service.afficherDemandeUtilisateur().listIterator();
+        while(it1.hasNext()) {
+            System.out.println(it1.next().toString());
+        }
+        
+        System.out.println("--------------------------------------");
+        
+        Date present = new Date(310, 02, 14);
+        ListIterator<Demande> it2 = service.afficherDemandeEnCours(present).listIterator();
+        while(it2.hasNext()) {
+            System.out.println(it2.next().toString());
+        }
+        
+        
+        /*
         // SERVICES ADHERENT
         
         Adherent Zifan = new Adherent("YAO", "Zifan","Zifan@Zifan.cn", "23 Rue Zifan 2323 Zifanville");
@@ -72,5 +106,6 @@ public class Main {
         
         JpaUtil.fermerEntityManager();
         JpaUtil.destroy();
+        */
     }
 }

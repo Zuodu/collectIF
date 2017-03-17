@@ -9,28 +9,28 @@ public class EvenementDAO {
     
     public Evenement findById(long id) throws Exception {
         EntityManager em = JpaUtil.obtenirEntityManager();
-        Evenement activite = null;
+        Evenement ev = null;
         try {
-            activite = em.find(Evenement.class, id);
+            ev = em.find(Evenement.class, id);
         }
         catch(Exception e) {
             throw e;
         }
-        return activite;
+        return ev;
     }
     
     public List<Evenement> findAll() throws Exception {
         EntityManager em = JpaUtil.obtenirEntityManager();
-        List<Evenement> activites = null;
+        List<Evenement> ev = null;
         try {
             Query q = em.createQuery("SELECT e FROM Evenement e");
-            activites = (List<Evenement>) q.getResultList();
+            ev = (List<Evenement>) q.getResultList();
         }
         catch(Exception e) {
             throw e;
         }
         
-        return activites;
+        return ev;
     }
     
     public void Create(Evenement a) throws Exception {
