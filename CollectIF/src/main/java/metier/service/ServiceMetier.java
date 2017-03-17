@@ -56,7 +56,7 @@ public class ServiceMetier {
         log("Success in creating new "+a.toString());
     }
     
-    public void creerActivite(Activite a) throws Exception 
+    public void creerActivite(Activite a) throws Exception
     {
         ActiviteDAO actDAO = new ActiviteDAO();
         JpaUtil.ouvrirTransaction();
@@ -65,7 +65,7 @@ public class ServiceMetier {
         log("Success in creating new "+a.toString());
     }
     
-    public void creerLieu(Lieu a) throws Exception 
+    public void creerLieu(Lieu a) throws Exception
     {
         LieuDAO lDAO = new LieuDAO();
         JpaUtil.ouvrirTransaction();
@@ -74,7 +74,7 @@ public class ServiceMetier {
         log("Success in creating new "+a.toString());
     }
     
-    public void creerDemande(Demande d) throws Exception 
+    public void creerDemande(Demande d) throws Exception
     {
         DemandeDAO demDAO = new DemandeDAO();
         JpaUtil.ouvrirTransaction();
@@ -83,7 +83,7 @@ public class ServiceMetier {
         log("Success in creating new "+d.toString());
     }
     
-    public void creerEvenement(Evenement e) throws Exception 
+    public void creerEvenement(Evenement e) throws Exception
     {
         EvenementDAO evDAO = new EvenementDAO();
         JpaUtil.ouvrirTransaction();
@@ -101,7 +101,7 @@ public class ServiceMetier {
         JpaUtil.ouvrirTransaction();
         Adherent utilisateur = adhDAO.findByMail(mail);
         JpaUtil.validerTransaction();
-        
+
         return utilisateur;
     }
     
@@ -115,9 +115,11 @@ public class ServiceMetier {
         JpaUtil.ouvrirTransaction();
         listeDemande = demDAO.findAll();
         JpaUtil.validerTransaction();
-        
+
         return listeDemande;
     }
+
+
     
     public List<Demande> afficherDemandeEnCours(Date present) throws Exception
     /*
@@ -129,7 +131,7 @@ public class ServiceMetier {
         JpaUtil.ouvrirTransaction();
         listeDemande = demDAO.findAll();
         JpaUtil.validerTransaction();
-        
+
         ListIterator<Demande> demandeIterator = listeDemande.listIterator();
         while(demandeIterator.hasNext()) {
             Demande demande = demandeIterator.next();
@@ -138,5 +140,22 @@ public class ServiceMetier {
         }
         return listeDemande;
     }
-    
+
+    public static void envoiMailSucces(Adherent aa)
+        /* envoi un message dans la console qui simule un e-mail de confirmation d'inscription
+
+             */
+    {
+        System.out.println("From    : collectif@collectif.org\nTo      : "+aa.getMail()+"\nSubject : Bienvenue chez Collect'IF\n");
+        System.out.println("Bonjour "+aa.getPrenom()+",\n"+"Nous vous confirmons votre adhesion a l'association COLLECT'IF. " +
+                "Votre numéro d'ahérent est : "+aa.getId()+".\n");
+    }
+
+    public static void envoiMailEchec(Adherent aa)
+    {
+        System.out.println("From    : collectif@collectif.org\nTo      : "+aa.getMail()+"\nSubject : Bienvenue chez Collect'IF\n");
+        System.out.println("Bonjour "+aa.getPrenom()+",\n"+"Votre adhesion a l'association COLLECT'IF a malencontreusement " +
+                "echouee... Merci de recommencer ulterieurement.\n");
+    }
+
 }
