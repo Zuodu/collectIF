@@ -39,7 +39,11 @@ public class ServiceMetier {
         pause(5);
     }
         
-    public static void createAdherent(Adherent a) throws Exception
+    public static void creerAdherent(Adherent a) throws Exception
+    /*
+            Vérifie l'existence d'un Adhérent donné par formulaire d'inscritption 
+            dans la BD et le créé s'il n'y est pas.
+            */
     {
         AdherentDAO adhDAO = new AdherentDAO();
         JpaUtil.ouvrirTransaction();
@@ -48,7 +52,7 @@ public class ServiceMetier {
         log("Success in creating new "+a.toString());
     }
     
-    public static void createActivite(Activite a) throws Exception 
+    public static void creerActivite(Activite a) throws Exception 
     {
         ActiviteDAO actDAO = new ActiviteDAO();
         JpaUtil.ouvrirTransaction();
@@ -57,7 +61,7 @@ public class ServiceMetier {
         log("Success in creating new "+a.toString());
     }
     
-    public static void createLieu(Lieu a) throws Exception 
+    public static void creerLieu(Lieu a) throws Exception 
     {
         LieuDAO lDAO = new LieuDAO();
         JpaUtil.ouvrirTransaction();
@@ -66,7 +70,7 @@ public class ServiceMetier {
         log("Success in creating new "+a.toString());
     }
     
-    public static void createDemande(Demande d) throws Exception 
+    public static void creerDemande(Demande d) throws Exception 
     {
         DemandeDAO demDAO = new DemandeDAO();
         JpaUtil.ouvrirTransaction();
@@ -75,7 +79,7 @@ public class ServiceMetier {
         log("Success in creating new "+d.toString());
     }
     
-    public static void createEvenement(Evenement e) throws Exception 
+    public static void creerEvenement(Evenement e) throws Exception 
     {
         EvenementDAO evDAO = new EvenementDAO();
         JpaUtil.ouvrirTransaction();
@@ -84,8 +88,21 @@ public class ServiceMetier {
         log("Success in creating new "+e.toString());
     }
     
-    public static int connexion(String mail) throws Exception
+    public static Adherent connexion(String mail) throws Exception
+    /*
+            Trouve/Vérifie l'existence du mail dans la BD
+            */
     {
         
     }
+    
+    public static int disconnection(String mail) throws Exception
+    /*
+            Trouve/Vérifie l'existence du mail dans la BD et change le statut de
+            l'utilisateur 
+            */
+    {
+        
+    }
+    
 }
