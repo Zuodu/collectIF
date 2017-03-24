@@ -33,5 +33,6 @@ public abstract class Evenement implements Serializable {
 
     @Override
     public abstract String toString();
+    public abstract List<Demande> getDemandes();
 
 }

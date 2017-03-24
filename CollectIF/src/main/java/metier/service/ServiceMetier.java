@@ -217,4 +217,14 @@ public class ServiceMetier {
                 "echouee... Merci de recommencer ulterieurement.\n");
     }
 
+    public static void envoiMailEvenement(Evenement evnt)
+    {
+        List<Demande> listeDemandes = evnt.getDemandes();
+        for(int i=0;i<listeDemandes.size();i++)
+        {
+            System.out.println("From    : collectif@collectif.org\nTo      : "+listeDemandes.get(0)+"\nSubject : Nouvel Evènement Collect'IF\n");
+            System.out.println("Bonjour"+listeDemandes.get(0).getNom()+",\n"+"");
+        }
+    }
+
 }
