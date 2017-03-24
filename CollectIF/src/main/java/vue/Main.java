@@ -10,6 +10,7 @@ import dao.AdherentDAO;
 import dao.JpaUtil;
 import dao.LieuDAO;
 import java.util.Date;
+import java.util.List;
 import java.util.ListIterator;
 import metier.modele.Activite;
 import metier.modele.Adherent;
@@ -43,6 +44,8 @@ public class Main {
         ActiviteDAO tennisDAO = new ActiviteDAO();
         Demande d3 = new Demande("romain.mie@free.fr", "MIE", tennisDAO.findById(17), Matin, date3);
         service.creerDemande(d3);
+        
+        //List<Demande> listD = new List<Demande>();
         
         ListIterator<Demande> it1 = service.afficherDemandeUtilisateur().listIterator();
         while(it1.hasNext()) {

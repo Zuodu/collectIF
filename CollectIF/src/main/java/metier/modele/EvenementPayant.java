@@ -1,5 +1,6 @@
 package metier.modele;
 
+import java.util.List;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import util.Statut;
@@ -13,7 +14,7 @@ public class EvenementPayant extends Evenement{
     protected EvenementPayant() {
     }
     
-    public EvenementPayant(String name, Demande[] asks, Lieu spot, Activite act, Statut state, Float PAF) {
+    public EvenementPayant(String name, List<Demande> asks, Lieu spot, Activite act, Statut state, Float PAF) {
         this.nom = name;
         this.demandes = asks;
         this.lieu = spot;
@@ -26,7 +27,7 @@ public class EvenementPayant extends Evenement{
         return nom;
     }
     
-    public Demande[] getDemandes() {
+    public List<Demande> getDemandes() {
         return demandes;
     }
     
@@ -50,7 +51,7 @@ public class EvenementPayant extends Evenement{
         nom = s;
     }
     
-    public void setDemandes(Demande[] s) {
+    public void setDemandes(List<Demande> s) {
         demandes = s;
     }
     
@@ -73,7 +74,7 @@ public class EvenementPayant extends Evenement{
     @Override
     public String toString() {
         return "Evenement{" + "nom=" + nom +
-                ", Première Demande de=" + demandes[0].getNom() +
+                ", Première Demande de=" + demandes.get(0).getNom() +
                 ", Lieu=" + lieu.getDenomination() +
                 ", Activite=" +activite.getDenomination() +
                 ", PAFIndiv=" + PAFIndividuel + '}';

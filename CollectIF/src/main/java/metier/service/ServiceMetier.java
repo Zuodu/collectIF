@@ -129,15 +129,15 @@ public class ServiceMetier {
         List<Demande> listeDemande = new ArrayList<Demande>();
         DemandeDAO demDAO = new DemandeDAO();
         JpaUtil.ouvrirTransaction();
-        listeDemande = demDAO.findAll();
+        listeDemande = demDAO.findAllPresent();
         JpaUtil.validerTransaction();
 
-        ListIterator<Demande> demandeIterator = listeDemande.listIterator();
+        /*ListIterator<Demande> demandeIterator = listeDemande.listIterator();
         while(demandeIterator.hasNext()) {
             Demande demande = demandeIterator.next();
             if(present.after(demande.getDate()))
             demandeIterator.remove();
-        }
+        }*/
         return listeDemande;
     }
 

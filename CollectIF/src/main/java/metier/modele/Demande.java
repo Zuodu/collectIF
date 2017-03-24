@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import util.Periode;
 
@@ -16,7 +18,10 @@ public class Demande implements Serializable {
     private Long id;
     private String mailUtilisateur;
     private String nomUtilisateur;
+    @OneToOne
     private Activite activite;
+    @ManyToOne
+    private Evenement evenement;
     private Periode periode;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date date;

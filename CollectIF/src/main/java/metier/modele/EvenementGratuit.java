@@ -1,5 +1,6 @@
 package metier.modele;
 
+import java.util.List;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import util.Statut;
@@ -11,7 +12,7 @@ public class EvenementGratuit extends Evenement {
     protected EvenementGratuit() {
     }
     
-    public EvenementGratuit(String name, Demande[] asks, Lieu spot, Activite act, Statut state) {
+    public EvenementGratuit(String name, List<Demande> asks, Lieu spot, Activite act, Statut state) {
         this.nom = name;
         this.demandes = asks;
         this.lieu = spot;
@@ -23,7 +24,7 @@ public class EvenementGratuit extends Evenement {
         return nom;
     }
     
-    public Demande[] getDemandes() {
+    public List<Demande> getDemandes() {
         return demandes;
     }
     
@@ -44,7 +45,7 @@ public class EvenementGratuit extends Evenement {
         nom = s;
     }
     
-    public void setDemandes(Demande[] s) {
+    public void setDemandes(List<Demande> s) {
         demandes = s;
     }
     
@@ -63,7 +64,7 @@ public class EvenementGratuit extends Evenement {
     @Override
     public String toString() {
         return "Evenement{" + "nom=" + nom +
-                ", Première Demande de=" + demandes[0].getNom() +
+                ", Première Demande de=" + demandes.get(0).getNom() +
                 ", Lieu=" + lieu.getDenomination() +
                 ", Activite=" +activite.getDenomination();
     }

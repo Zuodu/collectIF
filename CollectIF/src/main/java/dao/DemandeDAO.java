@@ -33,6 +33,20 @@ public class DemandeDAO {
         return activites;
     }
     
+    public List<Demande> findAllPresent() throws Exception {
+        EntityManager em = JpaUtil.obtenirEntityManager();
+        List<Demande> activites = null;
+        try {
+            Query q = em.createQuery("SELECT d FROM Demande d");
+            activites = (List<Demande>) q.getResultList();
+        }
+        catch(Exception e) {
+            throw e;
+        }
+        
+        return activites;
+    }
+    
     public void Create(Demande a) throws Exception {
         EntityManager em = JpaUtil.obtenirEntityManager();
         try {
