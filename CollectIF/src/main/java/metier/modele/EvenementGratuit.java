@@ -1,8 +1,10 @@
 package metier.modele;
 
+import java.util.Date;
 import java.util.List;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import util.Periode;
 import util.Statut;
 
 @Entity
@@ -12,11 +14,13 @@ public class EvenementGratuit extends Evenement {
     protected EvenementGratuit() {
     }
     
-    public EvenementGratuit(String name, List<Demande> asks, Lieu spot, Activite act, Statut state) {
+    public EvenementGratuit(String name, List<Demande> asks, Lieu spot, Activite act, Periode peri, Date dato, Statut state) {
         this.nom = name;
         this.demandes = asks;
         this.lieu = spot;
         this.activite = act;
+        this.periode = peri;
+        this.date = dato;
         this.statutEvenement = state;
     }
 
@@ -34,6 +38,14 @@ public class EvenementGratuit extends Evenement {
     
     public Activite getActivite() {
         return activite;
+    }
+    
+    public Periode getPeriode() {
+        return periode;
+    }
+    
+    public Date getDate() {
+        return date;
     }
     
     public Statut getStatutEvenement() {

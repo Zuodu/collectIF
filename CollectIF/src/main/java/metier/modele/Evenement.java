@@ -1,6 +1,7 @@
 package metier.modele;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
@@ -10,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import util.Periode;
 import util.Statut;
 
 @Entity
@@ -26,6 +28,8 @@ public abstract class Evenement implements Serializable {
     protected Lieu lieu;
     @OneToOne
     protected Activite activite;
+    protected Periode periode;
+    protected Date date;
     protected Statut statutEvenement;
 
     protected Evenement() {
