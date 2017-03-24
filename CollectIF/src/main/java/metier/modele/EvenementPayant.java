@@ -16,8 +16,7 @@ public class EvenementPayant extends Evenement{
     protected EvenementPayant() {
     }
     
-    public EvenementPayant(String name, List<Demande> asks, Lieu spot, Activite act, Periode peri, Date dato, Statut state, Float PAF) {
-        this.nom = name;
+    public EvenementPayant(List<Demande> asks, Lieu spot, Activite act, Periode peri, Date dato, Statut state, Float PAF) {
         this.demandes = asks;
         this.lieu = spot;
         this.activite = act;
@@ -25,10 +24,6 @@ public class EvenementPayant extends Evenement{
         this.date = dato;
         this.statutEvenement = state;
         this.PAFIndividuel = PAF;
-    }
-
-    public String getNom() {
-        return nom;
     }
     
     public List<Demande> getDemandes() {
@@ -57,10 +52,6 @@ public class EvenementPayant extends Evenement{
     
     public float getPAFIndividuel() {
         return PAFIndividuel;
-    }
-
-    public void setNom(String s) {
-        nom = s;
     }
     
     public void setDemandes(List<Demande> s) {
@@ -93,7 +84,7 @@ public class EvenementPayant extends Evenement{
 
     @Override
     public String toString() {
-        return "Evenement{" + "nom=" + nom +
+        return "Evenement{" +
                 ", Première Demande de=" + demandes.get(0).getAdherent().getNom() +
                 ", Lieu=" + lieu.getDenomination() +
                 ", Activite=" +activite.getDenomination() +

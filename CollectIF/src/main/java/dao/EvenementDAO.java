@@ -35,24 +35,6 @@ public class EvenementDAO {
         return ev;
     }
     
-    public Evenement findAvailableEvent(Demande demande) throws Exception {
-        EntityManager em = JpaUtil.obtenirEntityManager();
-        Evenement ev = null;
-        try {
-            Query q = em.createQuery("SELECT e FROM Evenement e WHERE e.activite = :activite AND e.periode = :periode AND e.date = :date AND e.statut = :statut");
-            q.setParameter("date", demande.getDate());
-            q.setParameter("activite", demande.getActivite());
-            q.setParameter("periode", demande.getPeriode());
-            q.setParameter("statut", Statut.EnAttente);
-            ev = (Evenement) q.getSingleResult();
-        }
-        catch(Exception e) {
-            throw e;
-        }
-        
-        return ev;
-    }
-    
     public void Create(Evenement a) throws Exception {
         EntityManager em = JpaUtil.obtenirEntityManager();
         try {

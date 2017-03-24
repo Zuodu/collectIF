@@ -14,18 +14,13 @@ public class EvenementGratuit extends Evenement {
     protected EvenementGratuit() {
     }
     
-    public EvenementGratuit(String name, List<Demande> asks, Lieu spot, Activite act, Periode peri, Date dato, Statut state) {
-        this.nom = name;
+    public EvenementGratuit(List<Demande> asks, Lieu spot, Activite act, Periode peri, Date dato, Statut state) {
         this.demandes = asks;
         this.lieu = spot;
         this.activite = act;
         this.periode = peri;
         this.date = dato;
         this.statutEvenement = state;
-    }
-
-    public String getNom() {
-        return nom;
     }
     
     public List<Demande> getDemandes() {
@@ -52,11 +47,6 @@ public class EvenementGratuit extends Evenement {
         return statutEvenement;
     }
     
-
-    public void setNom(String s) {
-        nom = s;
-    }
-    
     public void setDemandes(List<Demande> s) {
         demandes = s;
     }
@@ -75,7 +65,7 @@ public class EvenementGratuit extends Evenement {
     
     @Override
     public String toString() {
-        return "Evenement{" + "nom=" + nom +
+        return "Evenement{" +
                 ", Première Demande de=" + demandes.get(0).getAdherent().getNom() +
                 ", Lieu=" + lieu.getDenomination() +
                 ", Activite=" +activite.getDenomination();

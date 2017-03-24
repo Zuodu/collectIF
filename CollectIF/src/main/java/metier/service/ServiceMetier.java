@@ -14,11 +14,15 @@ import dao.LieuDAO;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.NoResultException;
 import metier.modele.Activite;
 import metier.modele.Adherent;
 import metier.modele.Demande;
 import metier.modele.Evenement;
+import metier.modele.EvenementGratuit;
+import metier.modele.EvenementPayant;
 import metier.modele.Lieu;
+import util.Statut;
 
 /**
  *
@@ -94,8 +98,11 @@ public class ServiceMetier {
         }
     }
     
+    //TODO: DEBUG CACA
     public void creerDemande(Demande d) throws Exception
     {
+        Evenement event = null;
+           boolean exists = true;
         try {
             JpaUtil.creerEntityManager();
         
@@ -104,6 +111,26 @@ public class ServiceMetier {
             demDAO.Create(d);
             JpaUtil.validerTransaction();
             log("Success in creating new "+d.toString());
+            
+            try {
+                event = demDAO.findAvailableEvent(d);
+            } catch (NoResultException e) {
+                exists = false;
+            }
+            if(exists == false) {
+                List<Demande> newList = new ArrayList<Demande>(); newList.add(d);
+                if(d.getActivite().getPayant()) {
+                event = new EvenementPayant(newList, null, d.getActivite(), d.getPeriode(), d.getDate(), Statut.EnAttente, .0f);
+                creerEvenement(event);
+                }
+                else {
+                    event = new EvenementGratuit(newList, null, d.getActivite(), d.getPeriode(), d.getDate(), Statut.EnAttente);
+                    creerEvenement(event);
+                }
+            } else {
+                event.getDemandes().add(d);
+                if(event.getDemandes().size() == event.getActivite().getNbParticipants()) event.setStatutEvenement(Statut.Prêt);
+            }
         }
         catch(Exception e) {
             throw e;

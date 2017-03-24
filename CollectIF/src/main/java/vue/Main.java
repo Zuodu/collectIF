@@ -15,6 +15,7 @@ import java.util.ListIterator;
 import metier.modele.Activite;
 import metier.modele.Adherent;
 import metier.modele.Demande;
+import metier.modele.Evenement;
 import metier.modele.Lieu;
 import metier.service.ServiceMetier;
 import static util.Periode.Matin;
@@ -29,35 +30,39 @@ public class Main {
         
         ServiceMetier service = new ServiceMetier();
         
-        Adherent SING = new Adherent("SING", "Alicia", "asing8183@free.fr", "Chinatown SF.");
-        Date date1 = new Date(98, 11, 23);
+        Activite tarot = new Activite("Tarot", false, 5);
         ActiviteDAO tarotDAO = new ActiviteDAO();
-        Demande d1 = new Demande(SING, tarotDAO.findById(14), Matin, date1);
+        service.creerActivite(tarot);
+        
+        Adherent SING = new Adherent("SING", "Alicia", "asing8183@free.fr", "Chinatown SF.");
+        service.creerAdherent(SING);
+        Date date1 = new Date(98, 11, 23);
+        Demande d1 = new Demande(SING, tarotDAO.findById(1), Matin, date1);
         service.creerDemande(d1);
         
         Adherent Zifan = new Adherent("YAO", "Zifan", "mail@zifan.fr", "Magellan");
+        service.creerAdherent(Zifan);
         Date date2 = new Date(312, 02, 14);
-        ActiviteDAO volleyDAO = new ActiviteDAO();
-        Demande d2 = new Demande(Zifan, volleyDAO.findById(15), Matin, date2);
+        Demande d2 = new Demande(Zifan, tarotDAO.findById(1), Matin, date2);
         service.creerDemande(d2);
         
         Adherent Manu = new Adherent("AMOUROUX", "Manuel", "manudu92@flambok.fr", "G");
+        service.creerAdherent(Manu);
         Date date3 = new Date(412, 05, 17);
-        ActiviteDAO tennisDAO = new ActiviteDAO();
-        Demande d3 = new Demande(Manu, tennisDAO.findById(17), Matin, date3);
+        Demande d3 = new Demande(Manu, tarotDAO.findById(1), Matin, date3);
         service.creerDemande(d3);
         
         //List<Demande> listD = new List<Demande>();
         
-        ListIterator<Demande> it1 = service.afficherDemandeUtilisateur().listIterator();
+        /*ListIterator<Demande> it1 = service.afficherDemandeUtilisateur().listIterator();
         while(it1.hasNext()) {
             System.out.println(it1.next().toString());
-        }
+        }*/
         
         System.out.println("--------------------------------------");
         
         Date present = new Date(310, 02, 14);
-        ListIterator<Demande> it2 = service.afficherDemandeEnCours(present).listIterator();
+        ListIterator<Demande> it2 = service.afficherEvenementEnCours(present).listIterator();
         while(it2.hasNext()) {
             System.out.println(it2.next().toString());
         }
