@@ -222,8 +222,8 @@ public class ServiceMetier {
         List<Demande> listeDemandes = evnt.getDemandes();
         for(int i=0;i<listeDemandes.size();i++)
         {
-            System.out.println("From    : collectif@collectif.org\nTo      : "+listeDemandes.get(0)+"\nSubject : Nouvel Evènement Collect'IF\n");
-            System.out.println("Bonjour"+listeDemandes.get(0).getNom()+",\n"+"");
+            System.out.println("From    : collectif@collectif.org\nTo      : "+listeDemandes.get(0).getAdherent().getMail()+"\nSubject : Nouvel Evènement Collect'IF\n");
+            System.out.println("Bonjour"+listeDemandes.get(0).getAdherent().getNom()+",\n"+"");
         }
     }
 

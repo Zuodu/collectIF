@@ -74,7 +74,7 @@ public class EvenementPayant extends Evenement{
     @Override
     public String toString() {
         return "Evenement{" + "nom=" + nom +
-                ", Première Demande de=" + demandes.get(0).getNom() +
+                ", Première Demande de=" + demandes.get(0).getAdherent().getNom() +
                 ", Lieu=" + lieu.getDenomination() +
                 ", Activite=" +activite.getDenomination() +
                 ", PAFIndiv=" + PAFIndividuel + '}';
