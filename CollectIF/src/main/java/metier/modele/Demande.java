@@ -16,8 +16,8 @@ public class Demande implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String mailUtilisateur;
-    private String nomUtilisateur;
+    @OneToOne
+    private Adherent adherent;
     @OneToOne
     private Activite activite;
     @ManyToOne
@@ -29,20 +29,15 @@ public class Demande implements Serializable {
     protected Demande() {
     }
     
-    public Demande(String mail, String username, Activite act, Periode per, Date dato) {
-        this.mailUtilisateur = mail;
-        this.nomUtilisateur = username;
+    public Demande(Adherent adherent, Activite act, Periode per, Date dato) {
+        this.adherent = adherent;
         this.activite = act;
         this.periode = per;
         this.date = dato;
     }
 
-    public String getMail() {
-        return mailUtilisateur;
-    }
-
-    public String getNom() {
-        return nomUtilisateur;
+    public Adherent getAdherent() {
+        return adherent;
     }
 
     public Activite getActivite() {
@@ -57,12 +52,8 @@ public class Demande implements Serializable {
         return date;
     }
 
-    public void setMail(String s) {
-        mailUtilisateur = s;
-    }
-
-    public void setNom(String s) {
-        nomUtilisateur = s;
+    public void setAdherent(Adherent a) {
+        adherent = a;
     }
 
     public void setActivite(Activite a) {
@@ -79,8 +70,7 @@ public class Demande implements Serializable {
 
     @Override
     public String toString() {
-        return "Demande{" + "mailUtilisateur=" + mailUtilisateur +
-                ", nomUtilisateur=" + nomUtilisateur +
+        return "Demande{" + "mailUtilisateur=" + adherent.getNom() +
                 ", Activite=" + activite.getDenomination() +
                 ", Periode=" + periode + ", Date=" + date + '}';
     }

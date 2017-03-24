@@ -14,7 +14,6 @@ import dao.LieuDAO;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.ListIterator;
 import metier.modele.Activite;
 import metier.modele.Adherent;
 import metier.modele.Demande;
@@ -49,47 +48,82 @@ public class ServiceMetier {
             dans la BD et le créé s'il n'y est pas.
             */
     {
-        AdherentDAO adhDAO = new AdherentDAO();
-        JpaUtil.ouvrirTransaction();
-        adhDAO.Create(a);
-        JpaUtil.validerTransaction();
-        log("Success in creating new "+a.toString());
+        try {
+            JpaUtil.creerEntityManager();
+        
+            AdherentDAO adhDAO = new AdherentDAO();
+            JpaUtil.ouvrirTransaction();
+            adhDAO.Create(a);
+            JpaUtil.validerTransaction();
+            log("Success in creating new "+a.toString());
+        }
+        catch(Exception e) {
+            throw e;
+        }
     }
     
     public void creerActivite(Activite a) throws Exception
     {
-        ActiviteDAO actDAO = new ActiviteDAO();
-        JpaUtil.ouvrirTransaction();
-        actDAO.Create(a);
-        JpaUtil.validerTransaction();
-        log("Success in creating new "+a.toString());
+        try {
+            JpaUtil.creerEntityManager();
+        
+            ActiviteDAO actDAO = new ActiviteDAO();
+            JpaUtil.ouvrirTransaction();
+            actDAO.Create(a);
+            JpaUtil.validerTransaction();
+            log("Success in creating new "+a.toString());
+        }
+        catch(Exception e) {
+            throw e;
+        }
     }
     
     public void creerLieu(Lieu a) throws Exception
     {
-        LieuDAO lDAO = new LieuDAO();
-        JpaUtil.ouvrirTransaction();
-        lDAO.Create(a);
-        JpaUtil.validerTransaction();
-        log("Success in creating new "+a.toString());
+        try {
+            JpaUtil.creerEntityManager();
+        
+            LieuDAO lDAO = new LieuDAO();
+            JpaUtil.ouvrirTransaction();
+            lDAO.Create(a);
+            JpaUtil.validerTransaction();
+            log("Success in creating new "+a.toString());
+        }
+        catch(Exception e) {
+            throw e;
+        }
     }
     
     public void creerDemande(Demande d) throws Exception
     {
-        DemandeDAO demDAO = new DemandeDAO();
-        JpaUtil.ouvrirTransaction();
-        demDAO.Create(d);
-        JpaUtil.validerTransaction();
-        log("Success in creating new "+d.toString());
+        try {
+            JpaUtil.creerEntityManager();
+        
+            DemandeDAO demDAO = new DemandeDAO();
+            JpaUtil.ouvrirTransaction();
+            demDAO.Create(d);
+            JpaUtil.validerTransaction();
+            log("Success in creating new "+d.toString());
+        }
+        catch(Exception e) {
+            throw e;
+        }
     }
     
-    public void creerEvenement(Evenement e) throws Exception
+    public void creerEvenement(Evenement event) throws Exception
     {
-        EvenementDAO evDAO = new EvenementDAO();
-        JpaUtil.ouvrirTransaction();
-        evDAO.Create(e);
-        JpaUtil.validerTransaction();
-        log("Success in creating new "+e.toString());
+        try {
+            JpaUtil.creerEntityManager();
+        
+            EvenementDAO evDAO = new EvenementDAO();
+            JpaUtil.ouvrirTransaction();
+            evDAO.Create(event);
+            JpaUtil.validerTransaction();
+            log("Success in creating new "+event.toString());
+        }
+        catch(Exception e) {
+            throw e;
+        }
     }
     
     public Adherent connexion(String mail) throws Exception
@@ -97,40 +131,65 @@ public class ServiceMetier {
             Trouve/Vérifie l'existence du mail dans la BD
             */
     {
-        AdherentDAO adhDAO = new AdherentDAO();
-        JpaUtil.ouvrirTransaction();
-        Adherent utilisateur = adhDAO.findByMail(mail);
-        JpaUtil.validerTransaction();
+        Adherent utilisateur;
+                
+        try {
+            JpaUtil.creerEntityManager();
+        
+            AdherentDAO adhDAO = new AdherentDAO();
+            JpaUtil.ouvrirTransaction();
+            utilisateur = adhDAO.findByMail(mail);
+            JpaUtil.validerTransaction();
+        }
+        catch(Exception e) {
+            throw e;
+        }
 
         return utilisateur;
     }
     
-    public List<Demande> afficherDemandeUtilisateur() throws Exception
+    public List<Demande> afficherDemandeUtilisateur(Adherent adherent) throws Exception
     /*
             Trouve/Vérifie l'existence du mail dans la BD
             */
     {
         List<Demande> listeDemande = new ArrayList<Demande>();
-        DemandeDAO demDAO = new DemandeDAO();
-        JpaUtil.ouvrirTransaction();
-        listeDemande = demDAO.findAll();
-        JpaUtil.validerTransaction();
+        
+        try {
+            JpaUtil.creerEntityManager();
+        
+            DemandeDAO demDAO = new DemandeDAO();
+            JpaUtil.ouvrirTransaction();
+            listeDemande = demDAO.findbyUser(adherent);
+            JpaUtil.validerTransaction();
+        }
+        catch(Exception e) {
+            throw e;
+        }
 
         return listeDemande;
     }
 
 
     
-    public List<Demande> afficherDemandeEnCours(Date present) throws Exception
+    public List<Demande> afficherEvenementEnCours(Date present) throws Exception
     /*
             Trouve/Vérifie l'existence du mail dans la BD
             */
     {
         List<Demande> listeDemande = new ArrayList<Demande>();
-        DemandeDAO demDAO = new DemandeDAO();
-        JpaUtil.ouvrirTransaction();
-        listeDemande = demDAO.findAllPresent();
-        JpaUtil.validerTransaction();
+        
+        try {
+            JpaUtil.creerEntityManager();
+        
+            DemandeDAO demDAO = new DemandeDAO();
+            JpaUtil.ouvrirTransaction();
+            listeDemande = demDAO.findAllPresent(present);
+            JpaUtil.validerTransaction();
+        }
+        catch(Exception e) {
+            throw e;
+        }
 
         /*ListIterator<Demande> demandeIterator = listeDemande.listIterator();
         while(demandeIterator.hasNext()) {

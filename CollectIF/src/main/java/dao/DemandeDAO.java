@@ -1,8 +1,10 @@
 package dao;
 
+import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import metier.modele.Adherent;
 import metier.modele.Demande;
 
 public class DemandeDAO {
@@ -19,11 +21,12 @@ public class DemandeDAO {
         return activite;
     }
     
-    public List<Demande> findAll() throws Exception {
+    public List<Demande> findbyUser(Adherent adherent) throws Exception {
         EntityManager em = JpaUtil.obtenirEntityManager();
         List<Demande> activites = null;
         try {
-            Query q = em.createQuery("SELECT d FROM Demande d");
+            Query q = em.createQuery("SELECT d FROM Demande d WHERE d.adherent = :adherent");
+            q.setParameter("adherent", adherent);
             activites = (List<Demande>) q.getResultList();
         }
         catch(Exception e) {
@@ -33,11 +36,12 @@ public class DemandeDAO {
         return activites;
     }
     
-    public List<Demande> findAllPresent() throws Exception {
+    public List<Demande> findAllPresent(Date present) throws Exception {
         EntityManager em = JpaUtil.obtenirEntityManager();
         List<Demande> activites = null;
         try {
-            Query q = em.createQuery("SELECT d FROM Demande d");
+            Query q = em.createQuery("SELECT d FROM Demande d WHERE d.date >= :present");
+            q.setParameter("present", present);
             activites = (List<Demande>) q.getResultList();
         }
         catch(Exception e) {

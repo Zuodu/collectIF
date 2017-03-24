@@ -26,23 +26,25 @@ import static util.Periode.Matin;
 public class Main {
     public static void main(String[] s) throws Exception {
         JpaUtil.init();
-        JpaUtil.creerEntityManager();
         
         ServiceMetier service = new ServiceMetier();
         
+        Adherent SING = new Adherent("SING", "Alicia", "asing8183@free.fr", "Chinatown SF.");
         Date date1 = new Date(98, 11, 23);
         ActiviteDAO tarotDAO = new ActiviteDAO();
-        Demande d1 = new Demande("asing8183@free.fr", "SING", tarotDAO.findById(14), Matin, date1);
+        Demande d1 = new Demande(SING, tarotDAO.findById(14), Matin, date1);
         service.creerDemande(d1);
         
+        Adherent Zifan = new Adherent("YAO", "Zifan", "mail@zifan.fr", "Magellan");
         Date date2 = new Date(312, 02, 14);
         ActiviteDAO volleyDAO = new ActiviteDAO();
-        Demande d2 = new Demande("asing8183@free.fr", "SING", volleyDAO.findById(15), Matin, date2);
+        Demande d2 = new Demande(Zifan, volleyDAO.findById(15), Matin, date2);
         service.creerDemande(d2);
         
+        Adherent Manu = new Adherent("AMOUROUX", "Manuel", "manudu92@flambok.fr", "G");
         Date date3 = new Date(412, 05, 17);
         ActiviteDAO tennisDAO = new ActiviteDAO();
-        Demande d3 = new Demande("romain.mie@free.fr", "MIE", tennisDAO.findById(17), Matin, date3);
+        Demande d3 = new Demande(Manu, tennisDAO.findById(17), Matin, date3);
         service.creerDemande(d3);
         
         //List<Demande> listD = new List<Demande>();
