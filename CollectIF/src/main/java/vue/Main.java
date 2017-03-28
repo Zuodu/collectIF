@@ -30,7 +30,7 @@ public class Main {
         
         ServiceMetier service = new ServiceMetier();
         
-        Activite tarot = new Activite("Tarot", false, 5);
+        Activite tarot = new Activite("Tarot", false, 2);
         ActiviteDAO tarotDAO = new ActiviteDAO();
         service.creerActivite(tarot);
         
@@ -43,21 +43,21 @@ public class Main {
         Adherent Zifan = new Adherent("YAO", "Zifan", "mail@zifan.fr", "Magellan");
         service.creerAdherent(Zifan);
         Date date2 = new Date(312, 02, 14);
-        Demande d2 = new Demande(Zifan, tarotDAO.findById(1), Matin, date2);
+        Demande d2 = new Demande(Zifan, tarotDAO.findById(1), Matin, date1);
         service.creerDemande(d2);
         
         Adherent Manu = new Adherent("AMOUROUX", "Manuel", "manudu92@flambok.fr", "G");
         service.creerAdherent(Manu);
         Date date3 = new Date(412, 05, 17);
-        Demande d3 = new Demande(Manu, tarotDAO.findById(1), Matin, date3);
+        Demande d3 = new Demande(Manu, tarotDAO.findById(1), Matin, date1);
         service.creerDemande(d3);
         
         //List<Demande> listD = new List<Demande>();
         
-        /*ListIterator<Demande> it1 = service.afficherDemandeUtilisateur().listIterator();
+        ListIterator<Demande> it1 = service.afficherDemandeUtilisateur(Manu).listIterator();
         while(it1.hasNext()) {
             System.out.println(it1.next().toString());
-        }*/
+        }
         
         System.out.println("--------------------------------------");
         
@@ -66,6 +66,8 @@ public class Main {
         while(it2.hasNext()) {
             System.out.println(it2.next().toString());
         }
+        
+        System.out.println(d3.getEvenement().toString());
         
         
         /*

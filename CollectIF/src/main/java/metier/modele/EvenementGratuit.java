@@ -67,7 +67,6 @@ public class EvenementGratuit extends Evenement {
     public String toString() {
         return "Evenement{" +
                 ", Première Demande de=" + demandes.get(0).getAdherent().getNom() +
-                ", Lieu=" + lieu.getDenomination() +
                 ", Activite=" +activite.getDenomination();
     }
 }

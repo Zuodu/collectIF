@@ -108,9 +108,8 @@ public class ServiceMetier {
         
             DemandeDAO demDAO = new DemandeDAO();
             JpaUtil.ouvrirTransaction();
-            demDAO.Create(d);
+            demDAO.create(d);
             JpaUtil.validerTransaction();
-            log("Success in creating new "+d.toString());
             
             try {
                 event = demDAO.findAvailableEvent(d);
@@ -120,16 +119,30 @@ public class ServiceMetier {
             if(exists == false) {
                 List<Demande> newList = new ArrayList<Demande>(); newList.add(d);
                 if(d.getActivite().getPayant()) {
-                event = new EvenementPayant(newList, null, d.getActivite(), d.getPeriode(), d.getDate(), Statut.EnAttente, .0f);
-                creerEvenement(event);
+                    event = new EvenementPayant(newList, null, d.getActivite(), d.getPeriode(), d.getDate(), Statut.EnAttente, .0f);
+                    creerEvenement(event);
+                    JpaUtil.ouvrirTransaction();
+                    d.setEvenement(event);
+                    demDAO.update(d);
+                    JpaUtil.validerTransaction();
                 }
                 else {
                     event = new EvenementGratuit(newList, null, d.getActivite(), d.getPeriode(), d.getDate(), Statut.EnAttente);
                     creerEvenement(event);
+                    JpaUtil.ouvrirTransaction();
+                    d.setEvenement(event);
+                    demDAO.update(d);
+                    JpaUtil.validerTransaction();
                 }
             } else {
                 event.getDemandes().add(d);
-                if(event.getDemandes().size() == event.getActivite().getNbParticipants()) event.setStatutEvenement(Statut.Prêt);
+                if(event.getDemandes().size() == event.getActivite().getNbParticipants()) {
+                    JpaUtil.ouvrirTransaction();
+                    event.setStatutEvenement(Statut.Prêt);
+                    d.setEvenement(event);
+                    demDAO.update(d);
+                    JpaUtil.validerTransaction();
+                }
             }
         }
         catch(Exception e) {
@@ -146,7 +159,6 @@ public class ServiceMetier {
             JpaUtil.ouvrirTransaction();
             evDAO.Create(event);
             JpaUtil.validerTransaction();
-            log("Success in creating new "+event.toString());
         }
         catch(Exception e) {
             throw e;

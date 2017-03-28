@@ -71,10 +71,20 @@ public class DemandeDAO {
         return ev;
     }
     
-    public void Create(Demande a) throws Exception {
+    public void create(Demande a) throws Exception {
         EntityManager em = JpaUtil.obtenirEntityManager();
         try {
             em.persist(a);
+        }
+        catch(Exception e) {
+            throw e;
+        }
+    }
+    
+    public void update(Demande a) throws Exception {
+        EntityManager em = JpaUtil.obtenirEntityManager();
+        try {
+            em.merge(a);
         }
         catch(Exception e) {
             throw e;

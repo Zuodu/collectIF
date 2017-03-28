@@ -2,7 +2,9 @@ package metier.modele;
 
 import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -34,10 +36,15 @@ public class Demande implements Serializable {
         this.activite = act;
         this.periode = per;
         this.date = dato;
+        this.evenement = null;
     }
 
     public Adherent getAdherent() {
         return adherent;
+    }
+    
+    public Evenement getEvenement() {
+        return evenement;
     }
 
     public Activite getActivite() {
@@ -50,6 +57,10 @@ public class Demande implements Serializable {
 
     public Date getDate() {
         return date;
+    }
+    
+    public void setEvenement(Evenement e) {
+        evenement = e;
     }
 
     public void setAdherent(Adherent a) {
