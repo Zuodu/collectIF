@@ -11,6 +11,6 @@ package util;
  */
 public enum Periode {
     Matin,
-    Aprem,
-    Soirée;
+    ApresMidi,
+    Soiree;
 }

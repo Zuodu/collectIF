@@ -138,7 +138,7 @@ public class ServiceMetier {
                 event.getDemandes().add(d);
                 if(event.getDemandes().size() == event.getActivite().getNbParticipants()) {
                     JpaUtil.ouvrirTransaction();
-                    event.setStatutEvenement(Statut.Prêt);
+                    event.setStatutEvenement(Statut.Pret);
                     d.setEvenement(event);
                     demDAO.update(d);
                     JpaUtil.validerTransaction();

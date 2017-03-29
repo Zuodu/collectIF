@@ -11,6 +11,6 @@ package util;
  */
 public enum Statut {
     EnAttente,
-    Prêt,
-    Validé;
+    Pret,
+    Valide;
 }
