@@ -25,6 +25,7 @@ import metier.modele.Evenement;
 import metier.modele.EvenementGratuit;
 import metier.modele.EvenementPayant;
 import metier.modele.Lieu;
+import util.Saisie;
 import util.Statut;
 
 /**
@@ -119,6 +120,7 @@ public class ServiceMetier {
 
             try {
                 JpaUtil.ouvrirTransaction();
+                Saisie.pause("Le systeme va essayer de trouver un evenement a vous associer. Appuyez sur [Entree] pour continuer...");
                 event = demDAO.findAvailableEvent(d);
                 JpaUtil.validerTransaction();
             } catch (NoResultException e) {
@@ -178,7 +180,7 @@ public class ServiceMetier {
             Trouve/Vérifie l'existence du mail dans la BD
             */
     {
-        Adherent utilisateur;
+        Adherent utilisateur = null;
 
         try {
             JpaUtil.creerEntityManager();
@@ -188,8 +190,12 @@ public class ServiceMetier {
             utilisateur = adhDAO.findByMail(mail);
             JpaUtil.validerTransaction();
         }
+        catch(NoResultException eb)
+        {
+            return null;
+        }
         catch(Exception e) {
-            throw e;
+            e.printStackTrace();
         }
 
         return utilisateur;
