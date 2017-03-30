@@ -5,12 +5,15 @@
  */
 package metier.service;
 
+import com.google.maps.model.LatLng;
 import dao.ActiviteDAO;
 import dao.AdherentDAO;
 import dao.DemandeDAO;
 import dao.EvenementDAO;
 import dao.JpaUtil;
 import dao.LieuDAO;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -112,7 +115,9 @@ public class ServiceMetier {
             JpaUtil.validerTransaction();
             
             try {
+                JpaUtil.ouvrirTransaction();
                 event = demDAO.findAvailableEvent(d);
+                JpaUtil.validerTransaction();
             } catch (NoResultException e) {
                 exists = false;
             }
@@ -259,10 +264,26 @@ public class ServiceMetier {
     public static void envoiMailEvenement(Evenement evnt)
     {
         List<Demande> listeDemandes = evnt.getDemandes();
+        SimpleDateFormat format = new SimpleDateFormat("dd MMMMM yyyy");
+        ServiceTechnique tech = new ServiceTechnique();
+        LatLng arrivee = new LatLng(evnt.getLieu().getLatitude(),evnt.getLieu().getLongitude());
+
         for(int i=0;i<listeDemandes.size();i++)
         {
-            System.out.println("From    : collectif@collectif.org\nTo      : "+listeDemandes.get(0).getAdherent().getMail()+"\nSubject : Nouvel Evènement Collect'IF\n");
-            System.out.println("Bonjour"+listeDemandes.get(0).getAdherent().getNom()+",\n"+"");
+            LatLng depart = new LatLng(listeDemandes.get(i).getAdherent().getLatitude(),listeDemandes.get(i).getAdherent().getLongitude());
+            double distance = ServiceTechnique.getDistanceEnKm(depart,arrivee);
+            System.out.println("From    : collectif@collectif.org\nTo      : "+listeDemandes.get(i).getAdherent().getMail()+"\nSubject : Nouvel Evenement Collect'IF\n");
+            System.out.println("Bonjour"+listeDemandes.get(i).getAdherent().getNom()+",\n"+"Comme vous l'aviez souhaite, Collect'IF organise un" +
+                    "evenement de "+listeDemandes.get(0).getActivite()+" le"+format.format(listeDemandes.get(0).getDate())+". Vous trouverez ci-dessous les details de cet evenement.");
+            System.out.println("\n Associativement votre,\n      Le responsable de l'Association\n\n");
+            System.out.println("Evenement : "+listeDemandes.get(0).getActivite()+"\nDate : "+format.format(listeDemandes.get(0).getDate()
+            +"\nLieu : "+evnt.getLieu().getAdresse()+"(à "+distance+" km de chez vous)"));
+            if(evnt.getPAFIndividuel() != 0) System.out.println("La PAF est de : "+evnt.getPAFIndividuel()+"\n\n");
+            System.out.println("Vous jouerez avec :\n");
+            for(int j=0;j<listeDemandes.size() && j!= i;j++)
+            {
+                System.out.println("     "+listeDemandes.get(j).getAdherent().getPrenom()+" "+listeDemandes.get(j).getAdherent().getNom());
+            }
         }
     }
 

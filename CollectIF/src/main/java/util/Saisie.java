@@ -58,6 +58,8 @@ public class Saisie {
         lireChaine("--PAUSE--");
     }
 
+    public static void pause(String chaine) { lireChaine(chaine);}
+
     public static void main(String[] args) {
         
         System.out.println("Bonjour !");

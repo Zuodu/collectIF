@@ -46,6 +46,8 @@ public class EvenementGratuit extends Evenement {
     public Statut getStatutEvenement() {
         return statutEvenement;
     }
+
+    public float getPAFIndividuel() { return 0; }
     
     public void setDemandes(List<Demande> s) {
         demandes = s;

@@ -40,5 +40,6 @@ public abstract class Evenement implements Serializable {
     public abstract List<Demande> getDemandes();
     public abstract Activite getActivite();
     public abstract void setStatutEvenement(Statut statut);
-
+    public abstract Lieu getLieu();
+    public abstract float getPAFIndividuel();
 }
