@@ -81,6 +81,24 @@ public class DemandeDAO {
         }
     }
     
+    public Demande findAvailableDemand(Demande demande) throws Exception {
+        EntityManager em = JpaUtil.obtenirEntityManager();
+        Demande dem = null;
+        try {
+            Query q = em.createQuery("SELECT d FROM Demande d WHERE d.activite = :activite AND d.periode = :periode AND d.date = :date AND d.adherent = :adherent");
+            q.setParameter("date", demande.getDate());
+            q.setParameter("activite", demande.getActivite());
+            q.setParameter("periode", demande.getPeriode());
+            q.setParameter("adherent", demande.getAdherent());
+            dem = (Demande) q.getSingleResult();
+        }
+        catch(Exception e) {
+            throw e;
+        }
+        
+        return dem;
+    }
+    
     public void update(Demande a) throws Exception {
         EntityManager em = JpaUtil.obtenirEntityManager();
         try {

@@ -51,82 +51,70 @@ public class ServiceMetier {
     }
 
     // vérifier la présence
-    public void creerAdherent(Adherent a) throws Exception
+    public boolean creerAdherent(Adherent a) throws Exception
     /*
             Vérifie l'existence d'un Adhérent donné par formulaire d'inscritption 
             dans la BD et le créé s'il n'y est pas.
             */
     {
+        boolean memberExists = true;
+        JpaUtil.creerEntityManager();
+
+        AdherentDAO adhDAO = new AdherentDAO();
+        
         try {
-            JpaUtil.creerEntityManager();
-
-            AdherentDAO adhDAO = new AdherentDAO();
             JpaUtil.ouvrirTransaction();
-            adhDAO.Create(a);
+            adhDAO.findByMail(a.getMail());
             JpaUtil.validerTransaction();
-            log("Success in creating new "+a.toString());
+        } catch (NoResultException e) {
+            memberExists = false;
         }
-        catch(Exception e) {
-            throw e;
+        
+        if(!memberExists) {
+            try {
+                JpaUtil.ouvrirTransaction();
+                adhDAO.Create(a);
+                JpaUtil.validerTransaction();
+            }
+            catch(Exception e) {
+                throw e;
+            }
+        } else {
+            return false;
         }
-    }
-
-    public void creerActivite(Activite a) throws Exception
-    {
-        try {
-            JpaUtil.creerEntityManager();
-
-            ActiviteDAO actDAO = new ActiviteDAO();
-            JpaUtil.ouvrirTransaction();
-            actDAO.Create(a);
-            JpaUtil.validerTransaction();
-            log("Success in creating new "+a.toString());
-        }
-        catch(Exception e) {
-            throw e;
-        }
-    }
-
-    public void creerLieu(Lieu a) throws Exception
-    {
-        try {
-            JpaUtil.creerEntityManager();
-
-            LieuDAO lDAO = new LieuDAO();
-            JpaUtil.ouvrirTransaction();
-            lDAO.Create(a);
-            JpaUtil.validerTransaction();
-            log("Success in creating new "+a.toString());
-        }
-        catch(Exception e) {
-            throw e;
-        }
+        return true;
     }
 
     //TODO: DEBUG CACA
-    // check si la même demande n'existe pas déjà/
-    //ajouter méthodes diagramme classes
-    public void creerDemande(Demande d) throws Exception
+    public boolean creerDemande(Demande d) throws Exception
     {
         Evenement event = null;
-           boolean exists = true;
+        boolean eventExists = true;
+        boolean demandExists = true;
+        
+        JpaUtil.creerEntityManager();
+
+        DemandeDAO demDAO = new DemandeDAO();
+
         try {
-            JpaUtil.creerEntityManager();
-
-            DemandeDAO demDAO = new DemandeDAO();
             JpaUtil.ouvrirTransaction();
-            demDAO.create(d);
+            demDAO.findAvailableDemand(d);
             JpaUtil.validerTransaction();
+        } catch (NoResultException e) {
+            demandExists = false;
+        }
 
+        if(!demandExists) {
             try {
                 JpaUtil.ouvrirTransaction();
+                demDAO.create(d);
                 Saisie.pause("Le systeme va essayer de trouver un evenement a vous associer. Appuyez sur [Entree] pour continuer...");
                 event = demDAO.findAvailableEvent(d);
                 JpaUtil.validerTransaction();
             } catch (NoResultException e) {
-                exists = false;
+                eventExists = false;
             }
-            if(exists == false) {
+            if(eventExists == false) {
                 List<Demande> newList = new ArrayList<Demande>(); newList.add(d);
                 if(d.getActivite().getPayant()) {
                     event = new EvenementPayant(newList, null, d.getActivite(), d.getPeriode(), d.getDate(), Statut.EnAttente, .0f);
@@ -135,8 +123,7 @@ public class ServiceMetier {
                     d.setEvenement(event);
                     demDAO.update(d);
                     JpaUtil.validerTransaction();
-                }
-                else {
+                } else {
                     event = new EvenementGratuit(newList, null, d.getActivite(), d.getPeriode(), d.getDate(), Statut.EnAttente);
                     creerEvenement(event);
                     JpaUtil.ouvrirTransaction();
@@ -154,10 +141,10 @@ public class ServiceMetier {
                     JpaUtil.validerTransaction();
                 }
             }
+        } else {
+            return false;
         }
-        catch(Exception e) {
-            throw e;
-        }
+        return true;
     }
 
     public void creerEvenement(Evenement event) throws Exception

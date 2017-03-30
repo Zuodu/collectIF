@@ -32,7 +32,6 @@ public class Main {
         
         Activite tarot = new Activite("Tarot", false, 2);
         ActiviteDAO tarotDAO = new ActiviteDAO();
-        service.creerActivite(tarot);
         
         Adherent SING = new Adherent("SING", "Alicia", "asing8183@free.fr", "Chinatown SF.");
         service.creerAdherent(SING);
