@@ -48,6 +48,7 @@ public class EvenementGratuit extends Evenement {
     }
 
     public float getPAFIndividuel() { return 0; }
+    public void setPAFIndividuel(float s) {}
     
     public void setDemandes(List<Demande> s) {
         demandes = s;
@@ -71,4 +72,6 @@ public class EvenementGratuit extends Evenement {
                 ", Première Demande de=" + demandes.get(0).getAdherent().getNom() +
                 ", Activite=" +activite.getDenomination();
     }
+
+    
 }

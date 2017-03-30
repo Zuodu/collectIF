@@ -10,6 +10,7 @@ import dao.AdherentDAO;
 import dao.DemandeDAO;
 import dao.EvenementDAO;
 import dao.JpaUtil;
+import dao.LieuDAO;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ import metier.modele.Demande;
 import metier.modele.Evenement;
 import metier.modele.EvenementGratuit;
 import metier.modele.EvenementPayant;
+import metier.modele.Lieu;
 import util.Statut;
 
 /**
@@ -292,6 +294,31 @@ public class ServiceMetier {
             return null;
         }
         return listeEvenement;
+    }
+    
+    public List<Lieu> afficherLieu() throws Exception
+    /**
+     * Extrait tous les événements encore d'actualité
+     * @param present La date du jour
+     * @return Liste contenant les objets Evenement
+     */
+
+    {
+        List<Lieu> listeLieu = new ArrayList<Lieu>();
+
+        try {
+            JpaUtil.creerEntityManager();
+
+            LieuDAO lieuDAO = new LieuDAO();
+            JpaUtil.ouvrirTransaction();
+            listeLieu = lieuDAO.findAll();
+            JpaUtil.validerTransaction();
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+        return listeLieu;
     }
 
     //*********************************************SERVICE MAIL

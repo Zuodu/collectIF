@@ -3,6 +3,7 @@ package metier.modele;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,6 +13,7 @@ import javax.persistence.Inheritance;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
+import javax.persistence.Version;
 import util.Periode;
 import util.Statut;
 
@@ -32,6 +34,9 @@ public abstract class Evenement implements Serializable {
     @Temporal(javax.persistence.TemporalType.DATE)
     protected Date date;
     protected Statut statutEvenement;
+    @Version
+    @Column(name="optlock",columnDefinition="integer DEFAULT 0",nullable=false)
+    protected Long version = 0L;
 
     protected Evenement() {
     }
@@ -40,6 +45,9 @@ public abstract class Evenement implements Serializable {
     public abstract List<Demande> getDemandes();
     public abstract Activite getActivite();
     public abstract void setStatutEvenement(Statut statut);
+    public abstract Statut getStatutEvenement();
     public abstract Lieu getLieu();
+    public abstract void setLieu(Lieu s);
     public abstract float getPAFIndividuel();
+    public abstract void setPAFIndividuel(float s);
 }
