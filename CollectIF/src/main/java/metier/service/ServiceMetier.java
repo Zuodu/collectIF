@@ -32,23 +32,24 @@ import util.Statut;
  * @author pchiu
  */
 public class ServiceMetier {
-    
-        private static void pause(long milliseconds) {
+
+    private static void pause(long milliseconds) {
         try {
             Thread.sleep(milliseconds);
         } catch (InterruptedException ex) {
             ex.hashCode();
         }
     }
-    
-        private static void log(String message) {
+
+    private static void log(String message) {
         System.out.flush();
         pause(5);
         System.err.println("[ServiceMetier:Log] " + message);
         System.err.flush();
         pause(5);
     }
-        
+
+    // vérifier la présence
     public void creerAdherent(Adherent a) throws Exception
     /*
             Vérifie l'existence d'un Adhérent donné par formulaire d'inscritption 
@@ -57,7 +58,7 @@ public class ServiceMetier {
     {
         try {
             JpaUtil.creerEntityManager();
-        
+
             AdherentDAO adhDAO = new AdherentDAO();
             JpaUtil.ouvrirTransaction();
             adhDAO.Create(a);
@@ -68,12 +69,12 @@ public class ServiceMetier {
             throw e;
         }
     }
-    
+
     public void creerActivite(Activite a) throws Exception
     {
         try {
             JpaUtil.creerEntityManager();
-        
+
             ActiviteDAO actDAO = new ActiviteDAO();
             JpaUtil.ouvrirTransaction();
             actDAO.Create(a);
@@ -84,12 +85,12 @@ public class ServiceMetier {
             throw e;
         }
     }
-    
+
     public void creerLieu(Lieu a) throws Exception
     {
         try {
             JpaUtil.creerEntityManager();
-        
+
             LieuDAO lDAO = new LieuDAO();
             JpaUtil.ouvrirTransaction();
             lDAO.Create(a);
@@ -100,20 +101,22 @@ public class ServiceMetier {
             throw e;
         }
     }
-    
+
     //TODO: DEBUG CACA
+    // check si la même demande n'existe pas déjà/
+    //ajouter méthodes diagramme classes
     public void creerDemande(Demande d) throws Exception
     {
         Evenement event = null;
            boolean exists = true;
         try {
             JpaUtil.creerEntityManager();
-        
+
             DemandeDAO demDAO = new DemandeDAO();
             JpaUtil.ouvrirTransaction();
             demDAO.create(d);
             JpaUtil.validerTransaction();
-            
+
             try {
                 JpaUtil.ouvrirTransaction();
                 event = demDAO.findAvailableEvent(d);
@@ -154,12 +157,12 @@ public class ServiceMetier {
             throw e;
         }
     }
-    
+
     public void creerEvenement(Evenement event) throws Exception
     {
         try {
             JpaUtil.creerEntityManager();
-        
+
             EvenementDAO evDAO = new EvenementDAO();
             JpaUtil.ouvrirTransaction();
             evDAO.Create(event);
@@ -169,17 +172,17 @@ public class ServiceMetier {
             throw e;
         }
     }
-    
+
     public Adherent connexion(String mail) throws Exception
     /*
             Trouve/Vérifie l'existence du mail dans la BD
             */
     {
         Adherent utilisateur;
-                
+
         try {
             JpaUtil.creerEntityManager();
-        
+
             AdherentDAO adhDAO = new AdherentDAO();
             JpaUtil.ouvrirTransaction();
             utilisateur = adhDAO.findByMail(mail);
@@ -191,17 +194,17 @@ public class ServiceMetier {
 
         return utilisateur;
     }
-    
+
     public List<Demande> afficherDemandeUtilisateur(Adherent adherent) throws Exception
     /*
             Trouve/Vérifie l'existence du mail dans la BD
             */
     {
         List<Demande> listeDemande = new ArrayList<Demande>();
-        
+
         try {
             JpaUtil.creerEntityManager();
-        
+
             DemandeDAO demDAO = new DemandeDAO();
             JpaUtil.ouvrirTransaction();
             listeDemande = demDAO.findbyUser(adherent);
@@ -215,17 +218,17 @@ public class ServiceMetier {
     }
 
 
-    
+
     public List<Demande> afficherEvenementEnCours(Date present) throws Exception
     /*
             Trouve/Vérifie l'existence du mail dans la BD
             */
     {
         List<Demande> listeDemande = new ArrayList<Demande>();
-        
+
         try {
             JpaUtil.creerEntityManager();
-        
+
             DemandeDAO demDAO = new DemandeDAO();
             JpaUtil.ouvrirTransaction();
             listeDemande = demDAO.findAllPresent(present);
