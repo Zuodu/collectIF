@@ -4,15 +4,13 @@ import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
-import metier.modele.Demande;
 import metier.modele.Evenement;
-import util.Statut;
 
 public class EvenementDAO {
     
     public Evenement findById(long id) throws Exception {
         EntityManager em = JpaUtil.obtenirEntityManager();
-        Evenement ev = null;
+        Evenement ev;
         try {
             ev = em.find(Evenement.class, id);
         }
@@ -30,7 +28,7 @@ public class EvenementDAO {
             ev = (List<Evenement>) q.getResultList();
         }
         catch(Exception e) {
-            throw e;
+            e.printStackTrace();
         }
         
         return ev;
@@ -45,19 +43,19 @@ public class EvenementDAO {
             list = (List<Evenement>) q.getResultList();
         }
         catch(Exception e) {
-            throw e;
+            e.printStackTrace();
         }
 
         return list;
     }
 
-    public void Create(Evenement a) throws Exception {
+    public void create(Evenement evnt) throws Exception {
         EntityManager em = JpaUtil.obtenirEntityManager();
         try {
-            em.persist(a);
+            em.persist(evnt);
         }
         catch(Exception e) {
-            throw e;
+            e.printStackTrace();
         }
     }
 

@@ -1,6 +1,5 @@
 package dao;
 
-import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -13,7 +12,7 @@ public class DemandeDAO {
     
     public Demande findById(long id) throws Exception {
         EntityManager em = JpaUtil.obtenirEntityManager();
-        Demande activite = null;
+        Demande activite;
         try {
             activite = em.find(Demande.class, id);
         }
@@ -25,7 +24,7 @@ public class DemandeDAO {
     
     public List<Demande> findbyUser(Adherent adherent) throws Exception {
         EntityManager em = JpaUtil.obtenirEntityManager();
-        List<Demande> activites = null;
+        List<Demande> activites;
         try {
             Query q = em.createQuery("SELECT d FROM Demande d WHERE d.adherent = :adherent");
             q.setParameter("adherent", adherent);
@@ -40,7 +39,7 @@ public class DemandeDAO {
     
     public Evenement findAvailableEvent(Demande demande) throws Exception {
         EntityManager em = JpaUtil.obtenirEntityManager();
-        Evenement ev = null;
+        Evenement ev;
         try {
             Query q = em.createQuery("SELECT e FROM Evenement e WHERE e.activite = :activite AND e.periode = :periode AND e.date = :date AND e.statutEvenement = :statut");
             q.setParameter("date", demande.getDate());
@@ -68,7 +67,7 @@ public class DemandeDAO {
     
     public Demande findAvailableDemand(Demande demande) throws Exception {
         EntityManager em = JpaUtil.obtenirEntityManager();
-        Demande dem = null;
+        Demande dem;
         try {
             Query q = em.createQuery("SELECT d FROM Demande d WHERE d.activite = :activite AND d.periode = :periode AND d.date = :date AND d.adherent = :adherent");
             q.setParameter("date", demande.getDate());

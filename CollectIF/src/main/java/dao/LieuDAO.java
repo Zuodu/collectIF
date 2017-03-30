@@ -9,7 +9,7 @@ public class LieuDAO {
     
     public Lieu findById(long id) throws Exception {
         EntityManager em = JpaUtil.obtenirEntityManager();
-        Lieu lieu = null;
+        Lieu lieu;
         try {
             lieu = em.find(Lieu.class, id);
         }
@@ -21,7 +21,7 @@ public class LieuDAO {
     
     public List<Lieu> findAll() throws Exception {
         EntityManager em = JpaUtil.obtenirEntityManager();
-        List<Lieu> lieux = null;
+        List<Lieu> lieux;
         try {
             Query q = em.createQuery("SELECT l FROM Lieu l");
             lieux = (List<Lieu>) q.getResultList();
@@ -32,13 +32,5 @@ public class LieuDAO {
         
         return lieux;
     }
-    public void Create(Lieu l) throws Exception {
-        EntityManager em = JpaUtil.obtenirEntityManager();
-        try {
-            em.persist(l);
-        }
-        catch(Exception e) {
-            throw e;
-        }
-    }
+
 }

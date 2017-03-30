@@ -118,6 +118,11 @@ public class ServiceMetier {
     }
 
     public boolean creerDemande(Demande newDemande) throws Exception
+    /**
+     * Persiste une Demande en prenant en compte les problèmes que cela peut poser.
+     * @param newDemande l'objet Demande à faire persister.
+     * @return une confirmation d'exécution.
+     */
     {
         Evenement event = null;
         boolean eventExists = true;
@@ -194,6 +199,10 @@ public class ServiceMetier {
     }
 
     public void creerEvenement(Evenement event) throws Exception
+    /**
+     * Persister un objet Evenement.
+     * @param event l'événement à faire persister.
+     */
     {
         try {
             JpaUtil.creerEntityManager();
@@ -210,6 +219,11 @@ public class ServiceMetier {
 
     //*********************************************UPDATE
     public boolean majEvenement(Evenement event) throws Exception
+    /**
+     * Met à jour un Evenement, surtout pour le choix du lieu.
+     * @param event l'Evenement qu'il faut mettre à jour
+     * @return un boolean de confirmation d'exécution.
+     */
     {
         try{
             JpaUtil.creerEntityManager();
@@ -230,9 +244,11 @@ public class ServiceMetier {
     //*********************************************AFFICHAGE
 
     public List<Demande> afficherDemandeUtilisateur(Adherent adherent) throws Exception
-    /*
-            Trouve/Vérifie l'existence du mail dans la BD
-            */
+    /**
+     * Extrait toute les demandes souhaitées par l'adhérent.
+     * @param adherent l'objet associé à l'utilisateur adhérent.
+     * @return Liste contenant l'ensemble des demandes réalisées par cet utilisateur.
+     */
     {
         List<Demande> listeDemande = new ArrayList<Demande>();
 
@@ -253,11 +269,11 @@ public class ServiceMetier {
         return listeDemande;
     }
 
-    public List<Demande> afficherEvenementEnCours(Date present) throws Exception
+    public List<Evenement> afficherEvenementEnCours(Date present) throws Exception
     /**
      * Extrait tous les événements encore d'actualité
      * @param present La date du jour
-     * @return Liste contenant
+     * @return Liste contenant les objets Evenement
      */
 
     {
@@ -275,15 +291,16 @@ public class ServiceMetier {
             e.printStackTrace();
             return null;
         }
-        return listeDemande;
+        return listeEvenement;
     }
 
     //*********************************************SERVICE MAIL
 
     public void envoiMailSucces(Adherent aa)
-        /* envoi un message dans la console qui simule un e-mail de confirmation d'inscription
-
-             */
+/**
+ * Simule un mail dans la console lors de l'envoi d'un mail d'inscription
+ * @param aa objet Adherent à qui il faut envoyer le mail.
+ */
     {
         System.out.println("From    : collectif@collectif.org\nTo      : "+aa.getMail()+"\nSubject : Bienvenue chez Collect'IF\n");
         System.out.println("Bonjour "+aa.getPrenom()+",\n"+"Nous vous confirmons votre adhesion a l'association COLLECT'IF. " +
@@ -291,6 +308,10 @@ public class ServiceMetier {
     }
 
     public void envoiMailEchec(Adherent aa)
+    /**
+     * Simule un mail dans la console lors de l'envoi d'un mail d'inscription
+     * @param aa objet Adherent à qui il faut envoyer le mail.
+     */
     {
         System.out.println("From    : collectif@collectif.org\nTo      : "+aa.getMail()+"\nSubject : Bienvenue chez Collect'IF\n");
         System.out.println("Bonjour "+aa.getPrenom()+",\n"+"Votre adhesion a l'association COLLECT'IF a malencontreusement " +
@@ -298,6 +319,10 @@ public class ServiceMetier {
     }
 
     public void envoiMailEvenement(Evenement evnt)
+    /**
+     * Simule un mail dans la console lors de l'envoi d'un mail de création d'évènement
+     * @param evnt objet Evenement qui contient toute les informations utiles.
+     */
     {
         List<Demande> listeDemandes = evnt.getDemandes();
         SimpleDateFormat format = new SimpleDateFormat("dd MMMMM yyyy");
