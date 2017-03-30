@@ -1,9 +1,8 @@
 package vue;
 
-import javax.persistence.NoResultException;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import dao.JpaUtil;
+import metier.modele.Activite;
+import metier.service.ServiceMetier;
 
 /**
  * Created by zuoduzuodu on 17/03/2017.
@@ -11,16 +10,9 @@ import java.util.Date;
 public class Test
 {
     public static void main(String[] args) throws Exception {
-    try{
-        throw new NoResultException();
-    }
-    catch (NoResultException e){
-        System.out.println("ok");
 
-    }
-    catch (Exception e)
-    {
-        System.out.println("haha");
-    }
+        JpaUtil.init();
+        ServiceMetier service = new ServiceMetier();
+
     }
 }

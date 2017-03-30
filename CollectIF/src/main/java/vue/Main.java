@@ -81,7 +81,7 @@ public class Main {
         AdherentDAO adhDAO = new AdherentDAO();
         
         JpaUtil.ouvrirTransaction();
-        adhDAO.Create(Zifan);
+        adhDAO.create(Zifan);
         JpaUtil.validerTransaction();
         
         JpaUtil.ouvrirTransaction();
@@ -96,7 +96,7 @@ public class Main {
         ActiviteDAO actiDAO = new ActiviteDAO();
         
         JpaUtil.ouvrirTransaction();
-        actiDAO.Create(TP);
+        actiDAO.create(TP);
         JpaUtil.validerTransaction();
         
         JpaUtil.ouvrirTransaction();
@@ -111,7 +111,7 @@ public class Main {
         LieuDAO lieuDAO = new LieuDAO();
         
         JpaUtil.ouvrirTransaction();
-        lieuDAO.Create(IF);
+        lieuDAO.create(IF);
         JpaUtil.validerTransaction();
         
         JpaUtil.ouvrirTransaction();
