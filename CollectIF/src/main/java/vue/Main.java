@@ -66,7 +66,7 @@ public class Main {
         System.out.println("--------------------------------------");
         
         Date present = new Date(310, 02, 14);
-        ListIterator<Demande> it2 = service.afficherEvenementEnCours(present).listIterator();
+        ListIterator<Evenement> it2 = service.afficherEvenementEnCours(present).listIterator();
         while(it2.hasNext()) {
             System.out.println(it2.next().toString());
         }

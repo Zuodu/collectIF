@@ -209,19 +209,19 @@ public class ServiceMetier {
 
 
 
-    public List<Demande> afficherEvenementEnCours(Date present) throws Exception
+    public List<Evenement> afficherEvenementEnCours(Date present) throws Exception
     /*
             Trouve/Vérifie l'existence du mail dans la BD
             */
     {
-        List<Demande> listeDemande = new ArrayList<Demande>();
+        List<Evenement> listeEvenement = new ArrayList<Evenement>();
 
         try {
             JpaUtil.creerEntityManager();
 
-            DemandeDAO demDAO = new DemandeDAO();
+            EvenementDAO evDAO = new EvenementDAO();
             JpaUtil.ouvrirTransaction();
-            listeDemande = demDAO.findAllPresent(present);
+            listeEvenement = evDAO.findAllPresent(present);
             JpaUtil.validerTransaction();
         }
         catch(Exception e) {
@@ -234,7 +234,7 @@ public class ServiceMetier {
             if(present.after(demande.getDate()))
             demandeIterator.remove();
         }*/
-        return listeDemande;
+        return listeEvenement;
     }
 
     public static void envoiMailSucces(Adherent aa)

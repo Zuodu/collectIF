@@ -38,21 +38,6 @@ public class DemandeDAO {
         return activites;
     }
     
-    public List<Demande> findAllPresent(Date present) throws Exception {
-        EntityManager em = JpaUtil.obtenirEntityManager();
-        List<Demande> activites = null;
-        try {
-            Query q = em.createQuery("SELECT d FROM Demande d WHERE d.date >= :present");
-            q.setParameter("present", present);
-            activites = (List<Demande>) q.getResultList();
-        }
-        catch(Exception e) {
-            throw e;
-        }
-        
-        return activites;
-    }
-    
     public Evenement findAvailableEvent(Demande demande) throws Exception {
         EntityManager em = JpaUtil.obtenirEntityManager();
         Evenement ev = null;
