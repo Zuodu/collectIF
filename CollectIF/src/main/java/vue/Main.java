@@ -18,6 +18,8 @@ import metier.modele.Demande;
 import metier.modele.Evenement;
 import metier.modele.Lieu;
 import metier.service.ServiceMetier;
+import util.Saisie;
+
 import static util.Periode.Matin;
 
 /**
@@ -37,18 +39,21 @@ public class Main {
         service.creerAdherent(SING);
         Date date1 = new Date(98, 11, 23);
         Demande d1 = new Demande(SING, tarotDAO.findById(1), Matin, date1);
+        Saisie.pause("Le systeme va essayer de trouver un evenement a vous associer. Appuyez sur [Entree] pour continuer...");
         service.creerDemande(d1);
         
         Adherent Zifan = new Adherent("YAO", "Zifan", "mail@zifan.fr", "Magellan");
         service.creerAdherent(Zifan);
         Date date2 = new Date(312, 02, 14);
         Demande d2 = new Demande(Zifan, tarotDAO.findById(1), Matin, date1);
+        Saisie.pause("Le systeme va essayer de trouver un evenement a vous associer. Appuyez sur [Entree] pour continuer...");
         service.creerDemande(d2);
         
         Adherent Manu = new Adherent("AMOUROUX", "Manuel", "manudu92@flambok.fr", "G");
         service.creerAdherent(Manu);
         Date date3 = new Date(412, 05, 17);
         Demande d3 = new Demande(Manu, tarotDAO.findById(1), Matin, date1);
+        Saisie.pause("Le systeme va essayer de trouver un evenement a vous associer. Appuyez sur [Entree] pour continuer...");
         service.creerDemande(d3);
         
         //List<Demande> listD = new List<Demande>();
@@ -65,7 +70,6 @@ public class Main {
         while(it2.hasNext()) {
             System.out.println(it2.next().toString());
         }
-        
         System.out.println(d3.getEvenement().toString());
 
         

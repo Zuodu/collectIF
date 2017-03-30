@@ -6,31 +6,28 @@
 package metier.service;
 
 import com.google.maps.model.LatLng;
-import dao.ActiviteDAO;
 import dao.AdherentDAO;
 import dao.DemandeDAO;
 import dao.EvenementDAO;
 import dao.JpaUtil;
-import dao.LieuDAO;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.NoResultException;
-import metier.modele.Activite;
+
 import metier.modele.Adherent;
 import metier.modele.Demande;
 import metier.modele.Evenement;
 import metier.modele.EvenementGratuit;
 import metier.modele.EvenementPayant;
-import metier.modele.Lieu;
 import util.Saisie;
 import util.Statut;
 
 /**
- *
- * @author pchiu
+ * Services Metier de Collect'IF
+ * @author pchiu & zyao
  */
 public class ServiceMetier {
 
@@ -51,11 +48,12 @@ public class ServiceMetier {
     }
 
     // vérifier la présence
-    public boolean creerAdherent(Adherent a) throws Exception
-    /*
-            Vérifie l'existence d'un Adhérent donné par formulaire d'inscritption 
-            dans la BD et le créé s'il n'y est pas.
-            */
+    public boolean creerAdherent(Adherent newAdherent) throws Exception
+    /**
+     * Vérifie l'existence d'un Adherent et le persiste  dans le cas contraire.
+     * @param newAdherent objet Adherent préalablement créé à faire persister.
+     * @return boolean True si l'adhérent a été persisté, false si il existe déjà.
+     */
     {
         boolean memberExists = true;
         JpaUtil.creerEntityManager();
@@ -64,7 +62,7 @@ public class ServiceMetier {
         
         try {
             JpaUtil.ouvrirTransaction();
-            adhDAO.findByMail(a.getMail());
+            adhDAO.findByMail(newAdherent.getMail());
             JpaUtil.validerTransaction();
         } catch (NoResultException e) {
             memberExists = false;
@@ -73,7 +71,7 @@ public class ServiceMetier {
         if(!memberExists) {
             try {
                 JpaUtil.ouvrirTransaction();
-                adhDAO.Create(a);
+                adhDAO.Create(newAdherent);
                 JpaUtil.validerTransaction();
             }
             catch(Exception e) {
@@ -85,59 +83,56 @@ public class ServiceMetier {
         return true;
     }
 
-    //TODO: DEBUG CACA
-    public boolean creerDemande(Demande d) throws Exception
+    public boolean creerDemande(Demande newDemande) throws Exception
     {
         Evenement event = null;
         boolean eventExists = true;
         boolean demandExists = true;
         
         JpaUtil.creerEntityManager();
-
         DemandeDAO demDAO = new DemandeDAO();
-
+        //bloc de gestion des conflits possibles
         try {
             JpaUtil.ouvrirTransaction();
-            demDAO.findAvailableDemand(d);
+            demDAO.findAvailableDemand(newDemande);
             JpaUtil.validerTransaction();
         } catch (NoResultException e) {
             demandExists = false;
         }
-
+        // si cette demande n'existe pas déjà ( empecher de créer plrs fois une meme demande
         if(!demandExists) {
             try {
                 JpaUtil.ouvrirTransaction();
-                demDAO.create(d);
-                Saisie.pause("Le systeme va essayer de trouver un evenement a vous associer. Appuyez sur [Entree] pour continuer...");
-                event = demDAO.findAvailableEvent(d);
+                demDAO.create(newDemande);
+                event = demDAO.findAvailableEvent(newDemande);
                 JpaUtil.validerTransaction();
             } catch (NoResultException e) {
                 eventExists = false;
             }
             if(eventExists == false) {
-                List<Demande> newList = new ArrayList<Demande>(); newList.add(d);
-                if(d.getActivite().getPayant()) {
-                    event = new EvenementPayant(newList, null, d.getActivite(), d.getPeriode(), d.getDate(), Statut.EnAttente, .0f);
+                List<Demande> newList = new ArrayList<Demande>(); newList.add(newDemande);
+                if(newDemande.getActivite().getPayant()) {
+                    event = new EvenementPayant(newList, null, newDemande.getActivite(), newDemande.getPeriode(), newDemande.getDate(), Statut.EnAttente, .0f);
                     creerEvenement(event);
                     JpaUtil.ouvrirTransaction();
-                    d.setEvenement(event);
-                    demDAO.update(d);
+                    newDemande.setEvenement(event);
+                    demDAO.update(newDemande);
                     JpaUtil.validerTransaction();
                 } else {
-                    event = new EvenementGratuit(newList, null, d.getActivite(), d.getPeriode(), d.getDate(), Statut.EnAttente);
+                    event = new EvenementGratuit(newList, null, newDemande.getActivite(), newDemande.getPeriode(), newDemande.getDate(), Statut.EnAttente);
                     creerEvenement(event);
                     JpaUtil.ouvrirTransaction();
-                    d.setEvenement(event);
-                    demDAO.update(d);
+                    newDemande.setEvenement(event);
+                    demDAO.update(newDemande);
                     JpaUtil.validerTransaction();
                 }
             } else {
-                event.getDemandes().add(d);
+                event.getDemandes().add(newDemande);
                 if(event.getDemandes().size() == event.getActivite().getNbParticipants()) {
                     JpaUtil.ouvrirTransaction();
                     event.setStatutEvenement(Statut.Pret);
-                    d.setEvenement(event);
-                    demDAO.update(d);
+                    newDemande.setEvenement(event);
+                    demDAO.update(newDemande);
                     JpaUtil.validerTransaction();
                 }
             }
@@ -151,7 +146,6 @@ public class ServiceMetier {
     {
         try {
             JpaUtil.creerEntityManager();
-
             EvenementDAO evDAO = new EvenementDAO();
             JpaUtil.ouvrirTransaction();
             evDAO.Create(event);
@@ -162,10 +156,14 @@ public class ServiceMetier {
         }
     }
 
+
+
     public Adherent connexion(String mail) throws Exception
-    /*
-            Trouve/Vérifie l'existence du mail dans la BD
-            */
+    /**
+    Trouve/Vérifie l'existence du mail dans la BD et renvoie un objet Adherent
+     @param mail mail de l'utilisateur sous forme String
+     @return objet Adherent
+    */
     {
         Adherent utilisateur = null;
 
@@ -177,14 +175,13 @@ public class ServiceMetier {
             utilisateur = adhDAO.findByMail(mail);
             JpaUtil.validerTransaction();
         }
-        catch(NoResultException eb)
+        catch(NoResultException e)
         {
             return null;
         }
         catch(Exception e) {
             e.printStackTrace();
         }
-
         return utilisateur;
     }
 
