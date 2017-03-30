@@ -261,13 +261,14 @@ public class ServiceMetier {
      */
 
     {
-        List<Demande> listeDemande = new ArrayList<Demande>();
+        List<Evenement> listeEvenement = new ArrayList<Evenement>();
 
         try {
             JpaUtil.creerEntityManager();
-            DemandeDAO demDAO = new DemandeDAO();
+
+            EvenementDAO evDAO = new EvenementDAO();
             JpaUtil.ouvrirTransaction();
-            listeDemande = demDAO.findAllPresent(present);
+            listeEvenement = evDAO.findAllPresent(present);
             JpaUtil.validerTransaction();
         }
         catch(Exception e) {
