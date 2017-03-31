@@ -7,7 +7,7 @@ package util;
 
 /**
  *
- * @author pchiu
+ * @author pchiu and zyao
  */
 public enum Periode {
     Matin,

@@ -5,7 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
+//---------------------------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------ENTITE
 @Entity
 public class Lieu implements Serializable {
     @Id
@@ -16,7 +17,7 @@ public class Lieu implements Serializable {
     private String adresse;
     private Double longitude;
     private Double latitude;
-
+    //----------------------------------------------------------------------------CONSTRUCTEUR
     protected Lieu() {
     }
 
@@ -27,7 +28,7 @@ public class Lieu implements Serializable {
         this.longitude = null;
         this.latitude = null;
     }
-
+    //----------------------------------------------------------------------------PUBLIC
     public Long getId() {
         return id;
     }
@@ -77,3 +78,4 @@ public class Lieu implements Serializable {
     }
     
 }
+//---------------------------------------------------------------------------------------------------------------------

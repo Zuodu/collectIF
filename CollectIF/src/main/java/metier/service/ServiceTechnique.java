@@ -9,18 +9,24 @@ import com.google.maps.GeoApiContext;
 import com.google.maps.GeocodingApi;
 import com.google.maps.model.GeocodingResult;
 import com.google.maps.model.LatLng;
-
+//---------------------------------------------------------------------------------------------------------------------
 /**
  *
- * @author pchiu
+ * @author pchiu and zyao
  */
 public class ServiceTechnique {
 
-    final static String MA_CLÉ_GOOGLE_API = "AIzaSyDcVVJjfmxsNdbdUYeg9MjQoJJ6THPuap4";
+    final static String MA_CLE_GOOGLE_API = "AIzaSyDcVVJjfmxsNdbdUYeg9MjQoJJ6THPuap4";
 
-    final static GeoApiContext MON_CONTEXTE_GEOAPI = new GeoApiContext().setApiKey(MA_CLÉ_GOOGLE_API);
+    final static GeoApiContext MON_CONTEXTE_GEOAPI = new GeoApiContext().setApiKey(MA_CLE_GOOGLE_API);
 
-    public static LatLng getLatLng(String adresse) {
+    /**
+     * Récupère les coordonnées LatLng à partir d'une adresse physique. Attention à la précisionde l'adresse !
+     * @param adresse Adresse physique repérable sur Google Maps.
+     * @return coordonnées au format LatLng.
+     */
+    public static LatLng getLatLng(String adresse)
+    {
         try {
             GeocodingResult[] results = GeocodingApi.geocode(MON_CONTEXTE_GEOAPI, adresse).await();
 
@@ -36,7 +42,14 @@ public class ServiceTechnique {
         return angleInDegree * Math.PI / 180.0;
     }
 
-    public static double getDistanceEnKm(LatLng origin, LatLng destination) {
+    /**
+     * Retrouve la distance séparant deux coordonnées en utilisant un calcul simple.
+     * @param origin Coordonnées du point d'origine
+     * @param destination Coordonnées du point d'arrivée
+     * @return double représentant la distance en KM entre les deux points.
+     */
+    public static double getDistanceEnKm(LatLng origin, LatLng destination)
+    {
 
         double R = 6371.0; // Average radius of Earth (km)
         double dLat = toRad(destination.lat - origin.lat);

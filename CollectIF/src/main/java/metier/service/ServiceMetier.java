@@ -25,10 +25,10 @@ import metier.modele.EvenementGratuit;
 import metier.modele.EvenementPayant;
 import metier.modele.Lieu;
 import util.Statut;
-
+//---------------------------------------------------------------------------------------------------------------------
 /**
  * Services Metier de Collect'IF
- * @author pchiu & zyao
+ * @author pchiu and zyao
  */
 public class ServiceMetier {
 
@@ -51,13 +51,12 @@ public class ServiceMetier {
 
     //*************************************************************************************PUBLIC
     //*********************************************CONNEXION
-
-    public Adherent connexion(String mail) throws Exception
     /**
      Trouve/Vérifie l'existence du mail dans la BD et renvoie un objet Adherent
      @param mail mail de l'utilisateur sous forme String
      @return objet Adherent
      */
+    public Adherent connexion(String mail) throws Exception
     {
         Adherent utilisateur = null;
 
@@ -80,13 +79,12 @@ public class ServiceMetier {
     }
 
     //*********************************************CREATION
-
-    public boolean creerAdherent(Adherent newAdherent) throws Exception
     /**
      * Vérifie l'existence d'un Adherent et le persiste  dans le cas contraire.
      * @param newAdherent objet Adherent préalablement créé à faire persister.
      * @return boolean True si l'adhérent a été persisté, false si il existe déjà.
      */
+    public boolean creerAdherent(Adherent newAdherent) throws Exception
     {
         boolean memberExists = true;
         JpaUtil.creerEntityManager();
@@ -117,13 +115,12 @@ public class ServiceMetier {
         }
         return true;
     }
-
-    public boolean creerDemande(Demande newDemande) throws Exception
     /**
      * Persiste une Demande en prenant en compte les problèmes que cela peut poser.
      * @param newDemande l'objet Demande à faire persister.
      * @return une confirmation d'exécution.
      */
+    public boolean creerDemande(Demande newDemande) throws Exception
     {
         Evenement event = null;
         boolean eventExists = true;
@@ -155,14 +152,16 @@ public class ServiceMetier {
                 List<Demande> newList = new ArrayList<Demande>(); newList.add(newDemande);
                 try {
                     if (newDemande.getActivite().getPayant()) {
-                        event = new EvenementPayant(newList, null, newDemande.getActivite(), newDemande.getPeriode(), newDemande.getDate(), Statut.EnAttente, .0f);
+                        event = new EvenementPayant(newList, null, newDemande.getActivite(), newDemande.getPeriode(),
+                                newDemande.getDate(), Statut.EnAttente, .0f);
                         creerEvenement(event);
                         JpaUtil.ouvrirTransaction();
                         newDemande.setEvenement(event);
                         demDAO.update(newDemande);
                         JpaUtil.validerTransaction();
                     } else {
-                        event = new EvenementGratuit(newList, null, newDemande.getActivite(), newDemande.getPeriode(), newDemande.getDate(), Statut.EnAttente);
+                        event = new EvenementGratuit(newList, null, newDemande.getActivite(), newDemande.getPeriode(),
+                                newDemande.getDate(), Statut.EnAttente);
                         creerEvenement(event);
                         JpaUtil.ouvrirTransaction();
                         newDemande.setEvenement(event);
@@ -198,12 +197,11 @@ public class ServiceMetier {
         }
         return true;
     }
-
-    public void creerEvenement(Evenement event) throws Exception
     /**
      * Persister un objet Evenement.
      * @param event l'événement à faire persister.
      */
+    public void creerEvenement(Evenement event) throws Exception
     {
         try {
             JpaUtil.creerEntityManager();
@@ -219,12 +217,12 @@ public class ServiceMetier {
     }
 
     //*********************************************UPDATE
-    public boolean majEvenement(Evenement event) throws Exception
     /**
      * Met à jour un Evenement, surtout pour le choix du lieu.
      * @param event l'Evenement qu'il faut mettre à jour
      * @return un boolean de confirmation d'exécution.
      */
+    public boolean majEvenement(Evenement event) throws Exception
     {
         try{
             JpaUtil.creerEntityManager();
@@ -243,13 +241,12 @@ public class ServiceMetier {
     }
 
     //*********************************************AFFICHAGE
-
-    public List<Demande> afficherDemandeUtilisateur(Adherent adherent) throws Exception
     /**
      * Extrait toute les demandes souhaitées par l'adhérent.
      * @param adherent l'objet associé à l'utilisateur adhérent.
      * @return Liste contenant l'ensemble des demandes réalisées par cet utilisateur.
      */
+    public List<Demande> afficherDemandeUtilisateur(Adherent adherent) throws Exception
     {
         List<Demande> listeDemande = new ArrayList<Demande>();
 
@@ -268,14 +265,12 @@ public class ServiceMetier {
         }
         return listeDemande;
     }
-
-    public List<Evenement> afficherEvenementEnCours(Date present) throws Exception
     /**
      * Extrait tous les événements encore d'actualité
      * @param present La date du jour
      * @return Liste contenant les objets Evenement
      */
-
+    public List<Evenement> afficherEvenementEnCours(Date present) throws Exception
     {
         List<Evenement> listeEvenement = new ArrayList<Evenement>();
 
@@ -293,13 +288,11 @@ public class ServiceMetier {
         }
         return listeEvenement;
     }
-    
-    public List<Lieu> afficherLieu() throws Exception
     /**
      * Extrait tous les lieux de la BD
      * @return Liste contenant les objets Lieu
      */
-
+    public List<Lieu> afficherLieu() throws Exception
     {
         List<Lieu> listeLieu = new ArrayList<Lieu>();
 
@@ -319,34 +312,31 @@ public class ServiceMetier {
     }
 
     //*********************************************SERVICE MAIL
-
+    /**
+     * Simule un mail dans la console lors de l'envoi d'un mail d'inscription
+     * @param aa objet Adherent à qui il faut envoyer le mail.
+     */
     public void envoiMailSucces(Adherent aa)
-/**
- * Simule un mail dans la console lors de l'envoi d'un mail d'inscription
- * @param aa objet Adherent à qui il faut envoyer le mail.
- */
     {
         System.out.println("From    : collectif@collectif.org\nTo      : "+aa.getMail()+"\nSubject : Bienvenue chez Collect'IF\n");
         System.out.println("Bonjour "+aa.getPrenom()+",\n"+"Nous vous confirmons votre adhesion a l'association COLLECT'IF. " +
                 "Votre numéro d'ahérent est : "+aa.getId()+".\n");
     }
-
-    public void envoiMailEchec(Adherent aa)
     /**
      * Simule un mail dans la console lors de l'envoi d'un mail d'inscription
      * @param aa objet Adherent à qui il faut envoyer le mail.
      */
+    public void envoiMailEchec(Adherent aa)
     {
         System.out.println("From    : collectif@collectif.org\nTo      : "+aa.getMail()+"\nSubject : Echec de votre inscription.\n");
         System.out.println("Bonjour "+aa.getPrenom()+",\n"+"Votre adhesion a l'association COLLECT'IF a malencontreusement " +
                 "echouee... Merci de recommencer ulterieurement.\n");
     }
-
-    public void envoiMailEvenement(Evenement evnt)
     /**
      * Simule un mail dans la console lors de l'envoi d'un mail de création d'évènement
      * @param evnt objet Evenement qui contient toute les informations utiles.
      */
+    public void envoiMailEvenement(Evenement evnt)
     {
         List<Demande> listeDemandes = evnt.getDemandes();
         SimpleDateFormat format = new SimpleDateFormat("dd MMMMM yyyy");
@@ -359,7 +349,8 @@ public class ServiceMetier {
             double distance = ServiceTechnique.getDistanceEnKm(depart,arrivee);
             System.out.println("From    : collectif@collectif.org\nTo      : "+listeDemandes.get(i).getAdherent().getMail()+"\nSubject : Nouvel Evenement Collect'IF\n");
             System.out.println("Bonjour "+listeDemandes.get(i).getAdherent().getPrenom()+",\n"+"Comme vous l'aviez souhaite, Collect'IF organise un" +
-                    " evenement de "+listeDemandes.get(0).getActivite().getDenomination()+" le "+format.format(listeDemandes.get(0).getDate())+". Vous trouverez ci-dessous les details de cet evenement.");
+                    " evenement de "+listeDemandes.get(0).getActivite().getDenomination()+" le "+format.format(listeDemandes.get(0).getDate())+
+                    ". Vous trouverez ci-dessous les details de cet evenement.");
             System.out.println("\n Associativement votre,\n      Le responsable de l'Association\n");
             System.out.println("Evenement : "+listeDemandes.get(0).getActivite().getDenomination()+"\nDate : "+format.format(listeDemandes.get(0).getDate())
                     +"\nLieu : "+evnt.getLieu().getAdresse()+"\n(à "+distance+" km de chez vous)");
@@ -375,3 +366,4 @@ public class ServiceMetier {
     }
 
 }
+//---------------------------------------------------------------------------------------------------------------------

@@ -4,9 +4,9 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import metier.modele.Adherent;
-
+//---------------------------------------------------------------------------------------------------------------------
 public class AdherentDAO {
-    
+    //----------------------------------------------------------------------------PUBLIC
     public Adherent findById(long id) throws Exception {
         EntityManager em = JpaUtil.obtenirEntityManager();
         Adherent adherent = null;
@@ -57,3 +57,4 @@ public class AdherentDAO {
         return adherent;
     }
 }
+//---------------------------------------------------------------------------------------------------------------------

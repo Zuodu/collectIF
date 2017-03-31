@@ -6,11 +6,12 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import util.Periode;
 import util.Statut;
-
+//---------------------------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------ENTITE
 @Entity
 @DiscriminatorValue("GRATUIT")
 public class EvenementGratuit extends Evenement {
-
+    //----------------------------------------------------------------------------CONSTRUCTEUR
     protected EvenementGratuit() {
     }
     
@@ -22,7 +23,7 @@ public class EvenementGratuit extends Evenement {
         this.date = dato;
         this.statutEvenement = state;
     }
-    
+    //----------------------------------------------------------------------------PUBLIC
     public List<Demande> getDemandes() {
         return demandes;
     }
@@ -72,6 +73,5 @@ public class EvenementGratuit extends Evenement {
                 ", Première Demande de=" + demandes.get(0).getAdherent().getNom() +
                 ", Activite=" +activite.getDenomination();
     }
-
-    
 }
+//---------------------------------------------------------------------------------------------------------------------

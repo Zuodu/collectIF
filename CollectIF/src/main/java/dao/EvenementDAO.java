@@ -5,9 +5,9 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import metier.modele.Evenement;
-
+//---------------------------------------------------------------------------------------------------------------------
 public class EvenementDAO {
-    
+    //----------------------------------------------------------------------------PUBLIC
     public Evenement findById(long id) throws Exception {
         EntityManager em = JpaUtil.obtenirEntityManager();
         Evenement ev = null;
@@ -69,3 +69,4 @@ public class EvenementDAO {
         }
     }
 }
+//---------------------------------------------------------------------------------------------------------------------

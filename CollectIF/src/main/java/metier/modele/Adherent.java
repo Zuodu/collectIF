@@ -5,7 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
+//---------------------------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------ENTITE
 @Entity
 public class Adherent implements Serializable {
     @Id
@@ -17,10 +18,10 @@ public class Adherent implements Serializable {
     private String adresse;
     private Double longitude;
     private Double latitude;
-
+    //----------------------------------------------------------------------------CONSTRUCTEUR
     protected Adherent() {
     }
-    
+    //----------------------------------------------------------------------------PUBLIC
     public Adherent(String nom, String prenom, String mail, String adresse) {
         this.nom = nom;
         this.prenom = prenom;
@@ -86,5 +87,5 @@ public class Adherent implements Serializable {
                 ", adresse=" + adresse + ", longitude=" + longitude +
                 ", latitude=" + latitude + '}';
     }
-
 }
+//---------------------------------------------------------------------------------------------------------------------

@@ -7,9 +7,9 @@ import metier.modele.Adherent;
 import metier.modele.Demande;
 import metier.modele.Evenement;
 import util.Statut;
-
+//---------------------------------------------------------------------------------------------------------------------
 public class DemandeDAO {
-    
+    //-----------------------------------------------------------------------------PUBLIC
     public Demande findById(long id) throws Exception {
         EntityManager em = JpaUtil.obtenirEntityManager();
         Demande activite = null;
@@ -41,7 +41,8 @@ public class DemandeDAO {
         EntityManager em = JpaUtil.obtenirEntityManager();
         Evenement ev = null;
         try {
-            Query q = em.createQuery("SELECT e FROM Evenement e WHERE e.activite = :activite AND e.periode = :periode AND e.date = :date AND e.statutEvenement = :statut");
+            Query q = em.createQuery("SELECT e FROM Evenement e WHERE e.activite = :activite AND e.periode = :periode " +
+                    "AND e.date = :date AND e.statutEvenement = :statut");
             q.setParameter("date", demande.getDate());
             q.setParameter("activite", demande.getActivite());
             q.setParameter("periode", demande.getPeriode());
@@ -69,7 +70,8 @@ public class DemandeDAO {
         EntityManager em = JpaUtil.obtenirEntityManager();
         Demande dem;
         try {
-            Query q = em.createQuery("SELECT d FROM Demande d WHERE d.activite = :activite AND d.periode = :periode AND d.date = :date AND d.adherent = :adherent");
+            Query q = em.createQuery("SELECT d FROM Demande d WHERE d.activite = :activite AND d.periode = :periode " +
+                    "AND d.date = :date AND d.adherent = :adherent");
             q.setParameter("date", demande.getDate());
             q.setParameter("activite", demande.getActivite());
             q.setParameter("periode", demande.getPeriode());
@@ -92,3 +94,4 @@ public class DemandeDAO {
         }
     }
 }
+//---------------------------------------------------------------------------------------------------------------------

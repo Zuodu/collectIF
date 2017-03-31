@@ -10,7 +10,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import util.Periode;
-
+//---------------------------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------ENTITE
 @Entity
 public class Demande implements Serializable {
     @Id
@@ -25,7 +26,7 @@ public class Demande implements Serializable {
     private Periode periode;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date date;
-
+    //----------------------------------------------------------------------------CONSTRUCTEUR
     protected Demande() {
     }
     
@@ -36,7 +37,7 @@ public class Demande implements Serializable {
         this.date = dato;
         this.evenement = null;
     }
-
+    //----------------------------------------------------------------------------PUBLIC
     public Adherent getAdherent() {
         return adherent;
     }
@@ -83,5 +84,5 @@ public class Demande implements Serializable {
                 ", Activite=" + activite.getDenomination() +
                 ", Periode=" + periode + ", Date=" + date + '}';
     }
-
 }
+//---------------------------------------------------------------------------------------------------------------------

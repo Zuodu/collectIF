@@ -5,7 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
+//---------------------------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------ENTITE
 @Entity
 public class Activite implements Serializable {
     @Id
@@ -14,10 +15,10 @@ public class Activite implements Serializable {
     private String denomination;
     private Boolean payant;
     private Integer nbParticipants;
-
+//----------------------------------------------------------------------------CONSTRUCTEUR
     protected Activite() {
     }
-
+//----------------------------------------------------------------------------PUBLIC
     public Activite(String denomination, Boolean payant, Integer nbParticipants) {
         this.denomination = denomination;
         this.payant = payant;
@@ -58,5 +59,5 @@ public class Activite implements Serializable {
                 ", payant=" + payant +
                 ", nbParticipants=" + nbParticipants + '}';
     }
-
 }
+//---------------------------------------------------------------------------------------------------------------------

@@ -4,9 +4,9 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import metier.modele.Lieu;
-
+//---------------------------------------------------------------------------------------------------------------------
 public class LieuDAO {
-    
+    //----------------------------------------------------------------------------PUBLIC
     public Lieu findById(long id) throws Exception {
         EntityManager em = JpaUtil.obtenirEntityManager();
         Lieu lieu = null;
@@ -34,3 +34,4 @@ public class LieuDAO {
     }
 
 }
+//---------------------------------------------------------------------------------------------------------------------

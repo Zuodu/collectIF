@@ -4,9 +4,10 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import metier.modele.Activite;
-
+//---------------------------------------------------------------------------------------------------------------------
 public class ActiviteDAO {
-    
+
+    //----------------------------------------------------------------------------PUBLIC
     public Activite findById(long id) throws Exception {
         EntityManager em = JpaUtil.obtenirEntityManager();
         Activite activite = null;
@@ -29,7 +30,7 @@ public class ActiviteDAO {
         catch(Exception e) {
             e.printStackTrace();
         }
-        
+
         return activites;
     }
     
@@ -43,3 +44,4 @@ public class ActiviteDAO {
         }
     }
 }
+//---------------------------------------------------------------------------------------------------------------------

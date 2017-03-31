@@ -6,11 +6,12 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import util.Periode;
 import util.Statut;
-
+//---------------------------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------ENTITE
 @Entity
 @DiscriminatorValue("PAYANT")
 public class EvenementPayant extends Evenement{
-
+    //----------------------------------------------------------------------------CONSTRUCTEUR
     private Float PAFIndividuel;
 
     protected EvenementPayant() {
@@ -25,7 +26,7 @@ public class EvenementPayant extends Evenement{
         this.statutEvenement = state;
         this.PAFIndividuel = PAF;
     }
-    
+    //----------------------------------------------------------------------------PUBLIC
     public List<Demande> getDemandes() {
         return demandes;
     }
@@ -90,3 +91,4 @@ public class EvenementPayant extends Evenement{
                 ", PAFIndiv=" + PAFIndividuel + '}';
     }
 }
+//---------------------------------------------------------------------------------------------------------------------

@@ -7,7 +7,8 @@ import javax.persistence.*;
 
 import util.Periode;
 import util.Statut;
-
+//---------------------------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------ENTITE
 @Entity
 @Inheritance
 @DiscriminatorColumn(name = "GRATUITE")
@@ -28,10 +29,10 @@ public abstract class Evenement implements Serializable {
     @Version
     @Column(name="optlock",columnDefinition="integer DEFAULT 0",nullable=false)
     protected Long version = 0L;
-
+    //----------------------------------------------------------------------------CONSTRUCTEUR
     protected Evenement() {
     }
-
+    //----------------------------------------------------------------------------PUBLIC
     public abstract String toString();
     public abstract List<Demande> getDemandes();
     public abstract Activite getActivite();
@@ -42,3 +43,4 @@ public abstract class Evenement implements Serializable {
     public abstract float getPAFIndividuel();
     public abstract void setPAFIndividuel(float s);
 }
+//---------------------------------------------------------------------------------------------------------------------
