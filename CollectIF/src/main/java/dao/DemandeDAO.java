@@ -12,26 +12,26 @@ public class DemandeDAO {
     
     public Demande findById(long id) throws Exception {
         EntityManager em = JpaUtil.obtenirEntityManager();
-        Demande activite;
+        Demande activite = null;
         try {
             activite = em.find(Demande.class, id);
         }
         catch(Exception e) {
-            throw e;
+            e.printStackTrace();
         }
         return activite;
     }
     
     public List<Demande> findbyUser(Adherent adherent) throws Exception {
         EntityManager em = JpaUtil.obtenirEntityManager();
-        List<Demande> activites;
+        List<Demande> activites = null;
         try {
             Query q = em.createQuery("SELECT d FROM Demande d WHERE d.adherent = :adherent");
             q.setParameter("adherent", adherent);
             activites = (List<Demande>) q.getResultList();
         }
         catch(Exception e) {
-            throw e;
+            e.printStackTrace();
         }
         
         return activites;
@@ -39,7 +39,7 @@ public class DemandeDAO {
     
     public Evenement findAvailableEvent(Demande demande) throws Exception {
         EntityManager em = JpaUtil.obtenirEntityManager();
-        Evenement ev;
+        Evenement ev = null;
         try {
             Query q = em.createQuery("SELECT e FROM Evenement e WHERE e.activite = :activite AND e.periode = :periode AND e.date = :date AND e.statutEvenement = :statut");
             q.setParameter("date", demande.getDate());
@@ -79,7 +79,6 @@ public class DemandeDAO {
         catch(Exception e) {
             throw e;
         }
-        
         return dem;
     }
     

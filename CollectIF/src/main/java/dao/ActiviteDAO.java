@@ -9,25 +9,25 @@ public class ActiviteDAO {
     
     public Activite findById(long id) throws Exception {
         EntityManager em = JpaUtil.obtenirEntityManager();
-        Activite activite;
+        Activite activite = null;
         try {
             activite = em.find(Activite.class, id);
         }
         catch(Exception e) {
-            throw e;
+            e.printStackTrace();
         }
         return activite;
     }
     
     public List<Activite> findAll() throws Exception {
         EntityManager em = JpaUtil.obtenirEntityManager();
-        List<Activite> activites;
+        List<Activite> activites = null;
         try {
             Query q = em.createQuery("SELECT a FROM Activite a");
             activites = (List<Activite>) q.getResultList();
         }
         catch(Exception e) {
-            throw e;
+            e.printStackTrace();
         }
         
         return activites;

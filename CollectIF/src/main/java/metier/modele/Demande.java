@@ -79,7 +79,7 @@ public class Demande implements Serializable {
 
     @Override
     public String toString() {
-        return "Demande{" + "mailUtilisateur=" + adherent.getNom() +
+        return "Demande{" + "mailUtilisateur=" + adherent.getMail() +
                 ", Activite=" + activite.getDenomination() +
                 ", Periode=" + periode + ", Date=" + date + '}';
     }

@@ -3,17 +3,8 @@ package metier.modele;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.Column;
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Temporal;
-import javax.persistence.Version;
+import javax.persistence.*;
+
 import util.Periode;
 import util.Statut;
 
@@ -24,7 +15,7 @@ public abstract class Evenement implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     protected Long id;
-    @OneToMany(mappedBy="evenement")
+    @OneToMany(mappedBy="evenement",cascade = CascadeType.PERSIST)
     protected List<Demande> demandes;
     @OneToOne
     protected Lieu lieu;

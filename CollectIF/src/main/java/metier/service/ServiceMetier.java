@@ -90,7 +90,6 @@ public class ServiceMetier {
     {
         boolean memberExists = true;
         JpaUtil.creerEntityManager();
-
         AdherentDAO adhDAO = new AdherentDAO();
 
         try {
@@ -267,7 +266,6 @@ public class ServiceMetier {
             JpaUtil.annulerTransaction();
             return null;
         }
-
         return listeDemande;
     }
 
@@ -298,9 +296,8 @@ public class ServiceMetier {
     
     public List<Lieu> afficherLieu() throws Exception
     /**
-     * Extrait tous les événements encore d'actualité
-     * @param present La date du jour
-     * @return Liste contenant les objets Evenement
+     * Extrait tous les lieux de la BD
+     * @return Liste contenant les objets Lieu
      */
 
     {
@@ -340,7 +337,7 @@ public class ServiceMetier {
      * @param aa objet Adherent à qui il faut envoyer le mail.
      */
     {
-        System.out.println("From    : collectif@collectif.org\nTo      : "+aa.getMail()+"\nSubject : Bienvenue chez Collect'IF\n");
+        System.out.println("From    : collectif@collectif.org\nTo      : "+aa.getMail()+"\nSubject : Echec de votre inscription.\n");
         System.out.println("Bonjour "+aa.getPrenom()+",\n"+"Votre adhesion a l'association COLLECT'IF a malencontreusement " +
                 "echouee... Merci de recommencer ulterieurement.\n");
     }
@@ -361,17 +358,19 @@ public class ServiceMetier {
             LatLng depart = new LatLng(listeDemandes.get(i).getAdherent().getLatitude(),listeDemandes.get(i).getAdherent().getLongitude());
             double distance = ServiceTechnique.getDistanceEnKm(depart,arrivee);
             System.out.println("From    : collectif@collectif.org\nTo      : "+listeDemandes.get(i).getAdherent().getMail()+"\nSubject : Nouvel Evenement Collect'IF\n");
-            System.out.println("Bonjour"+listeDemandes.get(i).getAdherent().getNom()+",\n"+"Comme vous l'aviez souhaite, Collect'IF organise un" +
-                    "evenement de "+listeDemandes.get(0).getActivite()+" le"+format.format(listeDemandes.get(0).getDate())+". Vous trouverez ci-dessous les details de cet evenement.");
-            System.out.println("\n Associativement votre,\n      Le responsable de l'Association\n\n");
-            System.out.println("Evenement : "+listeDemandes.get(0).getActivite()+"\nDate : "+format.format(listeDemandes.get(0).getDate()
-                    +"\nLieu : "+evnt.getLieu().getAdresse()+"(à "+distance+" km de chez vous)"));
-            if(evnt.getPAFIndividuel() != 0) System.out.println("La PAF est de : "+evnt.getPAFIndividuel()+"\n\n");
+            System.out.println("Bonjour "+listeDemandes.get(i).getAdherent().getPrenom()+",\n"+"Comme vous l'aviez souhaite, Collect'IF organise un" +
+                    " evenement de "+listeDemandes.get(0).getActivite().getDenomination()+" le "+format.format(listeDemandes.get(0).getDate())+". Vous trouverez ci-dessous les details de cet evenement.");
+            System.out.println("\n Associativement votre,\n      Le responsable de l'Association\n");
+            System.out.println("Evenement : "+listeDemandes.get(0).getActivite().getDenomination()+"\nDate : "+format.format(listeDemandes.get(0).getDate())
+                    +"\nLieu : "+evnt.getLieu().getAdresse()+"\n(à "+distance+" km de chez vous)");
+            if(evnt.getPAFIndividuel() != 0) System.out.println("La PAF est de : "+evnt.getPAFIndividuel()+"\n");
             System.out.println("Vous jouerez avec :\n");
-            for(int j=0;j<listeDemandes.size() && j!= i;j++)
+            for(int j=0;j<listeDemandes.size();j++)
             {
+                if(i!=j)
                 System.out.println("     "+listeDemandes.get(j).getAdherent().getPrenom()+" "+listeDemandes.get(j).getAdherent().getNom());
             }
+            System.out.println("-----------------------------------------------------------------------------------------");
         }
     }
 

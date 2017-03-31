@@ -10,12 +10,12 @@ public class EvenementDAO {
     
     public Evenement findById(long id) throws Exception {
         EntityManager em = JpaUtil.obtenirEntityManager();
-        Evenement ev;
+        Evenement ev = null;
         try {
             ev = em.find(Evenement.class, id);
         }
         catch(Exception e) {
-            throw e;
+            e.printStackTrace();
         }
         return ev;
     }

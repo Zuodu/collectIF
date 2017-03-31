@@ -9,25 +9,25 @@ public class AdherentDAO {
     
     public Adherent findById(long id) throws Exception {
         EntityManager em = JpaUtil.obtenirEntityManager();
-        Adherent adherent;
+        Adherent adherent = null;
         try {
             adherent = em.find(Adherent.class, id);
         }
         catch(Exception e) {
-            throw e;
+            e.printStackTrace();
         }
         return adherent;
     }
     
     public List<Adherent> findAll() throws Exception {
         EntityManager em = JpaUtil.obtenirEntityManager();
-        List<Adherent> adherents;
+        List<Adherent> adherents = null;
         try {
             Query q = em.createQuery("SELECT a FROM Adherent a");
             adherents = (List<Adherent>) q.getResultList();
         }
         catch(Exception e) {
-            throw e;
+            e.printStackTrace();
         }
         
         return adherents;
@@ -45,14 +45,14 @@ public class AdherentDAO {
     
     public Adherent findByMail(String mail) throws Exception {
         EntityManager em = JpaUtil.obtenirEntityManager();
-        Adherent adherent;
+        Adherent adherent = null;
         try {
             Query q = em.createQuery("SELECT a FROM Adherent a WHERE a.mail = :mail");
             q.setParameter("mail", mail);
             adherent = (Adherent) q.getSingleResult();
         }
         catch(Exception e) {
-            throw e;
+            e.printStackTrace();
         }
         return adherent;
     }
